@@ -19,6 +19,18 @@ const ordersEndpoints = {
       console.log(error);
     }
   },
+  editOrder: async (id: Order["id"], order: OrderRequest) => {
+    try {
+      const { data } = await apiClient.put<OrderRequest>(
+        `/orders/${id}`,
+        order
+      );
+      console.log("edited order", data);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
   deleteOrder: async (id: Order["id"]) => {
     try {
       const order = await apiClient.delete(`/orders/${id}`);

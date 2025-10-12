@@ -1,52 +1,72 @@
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, Button } from "react-native";
 import { Order } from "../../api/types";
+import { useRoute } from "@react-navigation/native";
+import useEditOrder from "../../api/hooks/useEditOrder";
 
 const ListItem = ({ order }: { order: Order }) => {
+  const params = useRoute();
+  const { mutateAsync: editOrder } = useEditOrder(order.id);
+
   const isBuy = order.action === "buy";
   const total = order.amount * order.price;
 
+  const editedOrder = {
+    ...order,
+    amount: order.amount + 10,
+  };
+
   return (
-    <View style={styles.container}>
-      <View>
-        <Text style={styles.date}>
-          {new Date(order.createdAt).toLocaleDateString("sv-SE", {
-            day: "numeric",
-            month: "short",
-          })}
-        </Text>
-        <Text
-          style={[styles.action, isBuy ? styles.buyAction : styles.sellAction]}
-        >
-          {order.action.toUpperCase()}
-        </Text>
-      </View>
-      <View>
-        <Text style={styles.instrumentName}>
-          Instrument {order.instrumentId}
-        </Text>
-      </View>
-
-      <View>
-        <Text style={styles.amount}>{order.amount} st</Text>
-      </View>
-
-      <View>
-        <Text style={styles.date}>
-          <View
-            style={{
-              // TODO: fix width
-              width: 190,
-              alignItems: "flex-end",
-              flexDirection: "column",
-              gap: 2,
-            }}
+    <>
+      <View style={styles.container}>
+        <View>
+          <Text style={styles.date}>
+            {new Date(order.createdAt).toLocaleDateString("sv-SE", {
+              day: "numeric",
+              month: "short",
+            })}
+          </Text>
+          <Text
+            style={[
+              styles.action,
+              isBuy ? styles.buyAction : styles.sellAction,
+            ]}
           >
-            <Text style={styles.total}>{total.toLocaleString("sv-SE")} kr</Text>
-            <Text style={styles.price}>{order.price} kr</Text>
-          </View>
-        </Text>
+            {order.action.toUpperCase()}
+          </Text>
+        </View>
+        <View>
+          <Text style={styles.instrumentName}>
+            Instrument {order.instrumentId}
+          </Text>
+        </View>
+
+        <View>
+          <Text style={styles.amount}>{order.amount} st</Text>
+        </View>
+
+        <View>
+          <Text style={styles.date}>
+            <View
+              style={{
+                // TODO: fix width
+                width: 190,
+                alignItems: "flex-end",
+                flexDirection: "column",
+                gap: 2,
+              }}
+            >
+              <Text style={styles.total}>
+                {total.toLocaleString("sv-SE")} kr
+              </Text>
+              <Text style={styles.price}>{order.price} kr</Text>
+            </View>
+          </Text>
+        </View>
       </View>
-    </View>
+      {params.name === "Order" && (
+        <Button title='Edit' onPress={() => editOrder(editedOrder)} />
+      )}
+    </>
   );
 };
 
