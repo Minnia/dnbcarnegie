@@ -1,7 +1,8 @@
 import axios from "axios";
+import { ENV } from "../config/env";
 
 const apiClient = axios.create({
-  baseURL: process.env.BASE_URL,
+  baseURL: ENV.API_BASE_URL,
 });
 
 export default apiClient;
