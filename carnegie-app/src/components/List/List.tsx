@@ -6,6 +6,7 @@ import useGetOrders from "../../api/hooks/useGetOrders";
 import useCreateOrder from "../../api/hooks/useCreateOrder";
 import useDeleteOrder from "../../api/hooks/useDeleteOrder";
 import Title from "../Title";
+import { useNavigation } from "@react-navigation/native";
 
 const List = () => {
   const { data: orders, isLoading, error: fetchError } = useGetOrders();
@@ -18,7 +19,7 @@ const List = () => {
 
   const { mutateAsync: deleteOrder } = useDeleteOrder(15);
 
-  console.log(orders);
+  const { navigate } = useNavigation<any>();
 
   const sections = useMemo(() => {
     if (!orders) return [];
@@ -89,7 +90,7 @@ const List = () => {
           return (
             <>
               <TouchableOpacity
-                onPress={() => {}}
+                onPress={() => navigate("Order", { order: item })}
                 style={{
                   backgroundColor: "lightblue",
                   marginBottom: 10,
