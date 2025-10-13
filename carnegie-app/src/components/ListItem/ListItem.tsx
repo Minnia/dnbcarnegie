@@ -1,15 +1,11 @@
-import { Text, View, Button } from "react-native";
+import { Text, View } from "react-native";
 import { Order } from "../../api/types";
-import { useRoute } from "@react-navigation/native";
-import useEditOrder from "../../api/hooks/useEditOrder";
 import { findMatchingInstrument } from "../../utils/helpers.utils";
 import useGetInstruments from "../../api/hooks/useGetInstruments";
 import * as S from "./styled";
 import { themes } from "../../core/themes";
 
 const ListItem = ({ order }: { order: Order }) => {
-  const params = useRoute();
-  const { mutateAsync: editOrder } = useEditOrder(order.id);
   const { data: instruments } = useGetInstruments();
 
   const match = findMatchingInstrument(order, instruments || []);
@@ -78,9 +74,6 @@ const ListItem = ({ order }: { order: Order }) => {
           </Text>
         </S.Section>
       </S.Container>
-      {params.name === "Order" && (
-        <Button title='Edit' onPress={() => editOrder(editedOrder)} />
-      )}
     </>
   );
 };

@@ -44,7 +44,7 @@ const List = () => {
           acc.push({
             title: monthYear,
             data: [order],
-            sortDate: new Date(order.createdAt),
+            sortDate: new Date(order.updatedAt),
           });
         }
         return acc;
