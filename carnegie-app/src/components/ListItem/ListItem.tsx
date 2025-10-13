@@ -1,11 +1,18 @@
-import { Text, View, StyleSheet, Button } from "react-native";
+import { Text, View, Button } from "react-native";
 import { Order } from "../../api/types";
 import { useRoute } from "@react-navigation/native";
 import useEditOrder from "../../api/hooks/useEditOrder";
+import { findMatchingInstrument } from "../../utils/helpers.utils";
+import useGetInstruments from "../../api/hooks/useGetInstruments";
+import * as S from "./styled";
+import { themes } from "../../core/themes";
 
 const ListItem = ({ order }: { order: Order }) => {
   const params = useRoute();
   const { mutateAsync: editOrder } = useEditOrder(order.id);
+  const { data: instruments } = useGetInstruments();
+
+  const match = findMatchingInstrument(order, instruments || []);
 
   const isBuy = order.action === "buy";
   const total = order.amount * order.price;
@@ -17,96 +24,65 @@ const ListItem = ({ order }: { order: Order }) => {
 
   return (
     <>
-      <View style={styles.container}>
+      <S.Container>
         <View>
-          <Text style={styles.date}>
+          <Text
+            style={{
+              fontSize: 10,
+              color: themes.light.colors.text,
+            }}
+          >
             {new Date(order.createdAt).toLocaleDateString("sv-SE", {
               day: "numeric",
               month: "short",
             })}
           </Text>
           <Text
-            style={[
-              styles.action,
-              isBuy ? styles.buyAction : styles.sellAction,
-            ]}
+            style={{
+              color: isBuy
+                ? themes.light.colors.success
+                : themes.light.colors.error,
+            }}
           >
             {order.action.toUpperCase()}
           </Text>
         </View>
-
-        <View>
-          <Text style={styles.amount}>{order.amount} st</Text>
-        </View>
-
-        <View>
-          <Text style={styles.date}>
-            <View
-              style={{
-                // TODO: fix width
-                width: 190,
-                alignItems: "flex-end",
-                flexDirection: "column",
-                gap: 2,
-              }}
-            >
-              <Text style={styles.total}>
-                {total.toLocaleString("sv-SE")} kr
-              </Text>
-              <Text style={styles.price}>{order.price} kr</Text>
-            </View>
+        <S.Section position='left' gap={4}>
+          <S.InstrumentName>{match?.name}</S.InstrumentName>
+          <Text
+            style={{
+              fontSize: 14,
+              color: themes.light.colors.text,
+            }}
+          >
+            {order.amount} st
           </Text>
-        </View>
-      </View>
+        </S.Section>
+        <S.Section position='right' gap={2}>
+          <Text
+            style={{
+              fontSize: 15,
+              color: themes.light.colors.text,
+              fontWeight: "500",
+            }}
+          >
+            {total.toLocaleString("sv-SE")} kr
+          </Text>
+          <Text
+            style={{
+              fontSize: 13,
+              color: themes.light.colors.text,
+            }}
+          >
+            {order.price} kr
+          </Text>
+        </S.Section>
+      </S.Container>
       {params.name === "Order" && (
         <Button title='Edit' onPress={() => editOrder(editedOrder)} />
       )}
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    width: 350,
-    borderBottomColor: "#e5e5e5",
-  },
-
-  instrumentName: {
-    fontSize: 15,
-    fontWeight: "400",
-    color: "#1a1a1a",
-  },
-  action: {
-    fontSize: 13,
-    fontWeight: "500",
-  },
-  buyAction: {
-    color: "#0f7b6c",
-  },
-  sellAction: {
-    color: "#d32f2f",
-  },
-
-  amount: {
-    fontSize: 14,
-    color: "#4a4a4a",
-  },
-  price: {
-    fontSize: 13,
-    color: "#6a6a6a",
-  },
-
-  total: {
-    fontSize: 15,
-    fontWeight: "500",
-    color: "#1a1a1a",
-  },
-  date: {
-    fontSize: 10,
-    color: "#8a8a8a",
-    flexDirection: "column",
-  },
-});
 
 export default ListItem;

@@ -61,7 +61,7 @@ const List = () => {
 
   return (
     <>
-      <View style={{ paddingTop: 50 }}>
+      <View>
         <Button
           title='Add'
           onPress={() =>
@@ -76,6 +76,7 @@ const List = () => {
         <Button title='Delete' onPress={() => deleteOrder()} />
       </View>
       <SectionList
+        style={{ margin: 8 }}
         sections={sections}
         renderSectionHeader={({ section: { title } }) => (
           <View>
