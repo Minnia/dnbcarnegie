@@ -1,5 +1,4 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import OrdersScreen from "../screens/OrdersScreen";
 import { BottomTabNavigation } from "./BottomTabNavigation";
 
 const Stack = createStackNavigator();
