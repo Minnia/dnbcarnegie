@@ -27,3 +27,8 @@ export type Instrument = {
   ticker: string;
   name: string;
 };
+
+export type InstrumentsResponse = {
+  error: string | null;
+  items: Instrument[];
+};
