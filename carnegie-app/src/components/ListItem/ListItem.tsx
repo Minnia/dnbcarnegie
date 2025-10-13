@@ -34,11 +34,6 @@ const ListItem = ({ order }: { order: Order }) => {
             {order.action.toUpperCase()}
           </Text>
         </View>
-        <View>
-          <Text style={styles.instrumentName}>
-            Instrument {order.instrumentId}
-          </Text>
-        </View>
 
         <View>
           <Text style={styles.amount}>{order.amount} st</Text>
