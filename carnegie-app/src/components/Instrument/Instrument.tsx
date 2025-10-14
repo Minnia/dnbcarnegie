@@ -100,6 +100,8 @@ const Instrument = ({ order }: { order: Order }) => {
             {new Date(cachedOrder.createdAt).toLocaleString("sv-SE", {
               day: "numeric",
               month: "short",
+              hour: "2-digit",
+              minute: "2-digit",
             })}
           </Text>
           <Text
@@ -113,6 +115,8 @@ const Instrument = ({ order }: { order: Order }) => {
             {new Date(cachedOrder.updatedAt).toLocaleString("sv-SE", {
               day: "numeric",
               month: "short",
+              hour: "2-digit",
+              minute: "2-digit",
             })}
           </Text>
         </View>
