@@ -11,7 +11,7 @@ const useDeleteOrder = (id: Order["id"]) => {
       await ordersEndpoints.deleteOrder(id);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey });
+      queryClient.invalidateQueries({ queryKey: ["orders"] });
     },
   });
   return mutation;

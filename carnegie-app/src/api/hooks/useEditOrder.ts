@@ -13,6 +13,7 @@ const useEditOrder = (id: number) => {
       console.log("Error editing order:", error);
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["order", id] });
       queryClient.invalidateQueries({ queryKey: ["orders"] });
     },
   });
