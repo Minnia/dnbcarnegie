@@ -28,7 +28,7 @@ const ListItem = ({ order }: { order: Order }) => {
               color: themes.light.colors.text,
             }}
           >
-            {new Date(order.createdAt).toLocaleDateString("sv-SE", {
+            {new Date(order.updatedAt).toLocaleDateString("sv-SE", {
               day: "numeric",
               month: "short",
             })}

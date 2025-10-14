@@ -1,23 +1,13 @@
-import { Button, SectionList, TouchableOpacity, View } from "react-native";
+import { SectionList, TouchableOpacity, View } from "react-native";
 import ListItem from "../ListItem";
 import { useMemo } from "react";
 import { Order } from "../../api/types";
 import useGetOrders from "../../api/hooks/useGetOrders";
-import useCreateOrder from "../../api/hooks/useCreateOrder";
-import useDeleteOrder from "../../api/hooks/useDeleteOrder";
 import Title from "../Title";
 import { useNavigation } from "@react-navigation/native";
 
 const List = () => {
   const { data: orders, isLoading, error: fetchError } = useGetOrders();
-  const {
-    mutateAsync: createOrder,
-    error,
-    isPending,
-    isSuccess,
-  } = useCreateOrder();
-
-  const { mutateAsync: deleteOrder } = useDeleteOrder(15);
 
   const { navigate } = useNavigation<any>();
 
@@ -29,7 +19,7 @@ const List = () => {
         acc: { title: string; data: Order[]; sortDate: Date }[],
         order: Order
       ) => {
-        const monthYear = new Date(order.createdAt).toLocaleDateString(
+        const monthYear = new Date(order.updatedAt).toLocaleDateString(
           "sv-SE",
           {
             year: "numeric",
@@ -61,20 +51,6 @@ const List = () => {
 
   return (
     <>
-      <View>
-        <Button
-          title='Add'
-          onPress={() =>
-            createOrder({
-              instrumentId: 1,
-              amount: 100,
-              price: 20,
-              action: "buy",
-            })
-          }
-        />
-        <Button title='Delete' onPress={() => deleteOrder()} />
-      </View>
       <SectionList
         style={{ margin: 8 }}
         sections={sections}
