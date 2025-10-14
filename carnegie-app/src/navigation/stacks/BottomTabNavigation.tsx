@@ -5,22 +5,13 @@ import OrderManagement from "../screens/OrderManagement";
 export const BottomTabNavigation = () => {
   const { Navigator, Screen } = createBottomTabNavigator();
   return (
-    <Navigator
-      initialRouteName='Orders'
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
+    <Navigator initialRouteName='Orders'>
       <Screen
         name='Orders'
         options={{ headerShown: false }}
         component={OrderStack}
       />
-      <Screen
-        name='OrderManagement'
-        options={{ headerShown: false }}
-        component={OrderManagement}
-      />
+      <Screen name='OrderManagement' component={OrderManagement} />
     </Navigator>
   );
 };
