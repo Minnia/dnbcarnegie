@@ -11,6 +11,20 @@ export const findMatchingInstrument = (
   const matching = instruments?.find(
     (instrument) => order.instrumentId === instrument.id
   );
-  console.log("Matching result:", matching);
+
   return matching;
+};
+
+export const fuzzySearch = (query: string, items: any[]): any[] => {
+  if (!query) return items;
+
+  const lowercaseQuery = query.toLowerCase();
+  return items.filter((item) => {
+    return Object.values(item).some((value) => {
+      if (typeof value === "string" || typeof value === "number") {
+        return value.toString().toLowerCase().includes(lowercaseQuery);
+      }
+      return false;
+    });
+  });
 };
