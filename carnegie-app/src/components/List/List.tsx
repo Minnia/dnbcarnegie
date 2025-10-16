@@ -1,6 +1,6 @@
-import { SectionList, TouchableOpacity, View } from "react-native";
+import { SectionList, Text, TouchableOpacity, View } from "react-native";
 import ListItem from "../ListItem";
-import { useMemo } from "react";
+import { Suspense, useMemo } from "react";
 import { Order } from "../../api/types";
 import useGetOrders from "../../api/hooks/useGetOrders";
 import Title from "../Title";
@@ -50,19 +50,23 @@ const List = () => {
   }, [orders]);
 
   return (
-    <>
+    <Suspense
+      fallback={
+        <View>
+          <Text>Loading...</Text>
+        </View>
+      }
+    >
       <SectionList
+        stickySectionHeadersEnabled={false}
         style={{ margin: 8 }}
         sections={sections}
+        showsVerticalScrollIndicator
         renderSectionHeader={({ section: { title } }) => (
           <View>
             <Title title={title} />
           </View>
         )}
-        contentContainerStyle={{
-          justifyContent: "center",
-          flex: 1,
-        }}
         renderItem={({ item }) => {
           return (
             <>
@@ -82,7 +86,7 @@ const List = () => {
         }}
         keyExtractor={(item) => item.id.toString()}
       />
-    </>
+    </Suspense>
   );
 };
 

@@ -5,6 +5,7 @@ import { FlatList, TextInput } from "react-native-gesture-handler";
 import useGetInstruments from "../../api/hooks/useGetInstruments";
 import { useState } from "react";
 import { fuzzySearch } from "../../utils/helpers.utils";
+import { useNavigation } from "@react-navigation/native";
 
 const OrderManagement = () => {
   const {
@@ -14,6 +15,7 @@ const OrderManagement = () => {
     isSuccess,
   } = useCreateOrder();
   const { data: instruments } = useGetInstruments();
+  const { navigate } = useNavigation<any>();
 
   const [searchParam, setSearchParam] = useState("");
 
@@ -54,23 +56,14 @@ const OrderManagement = () => {
               data={fuzzySearch(searchParam, instruments)}
               keyExtractor={(item) => item.id.toString()}
               renderItem={({ item }) => (
-                // TODO: add onpress for navigation to instrument screen
-                <TouchableOpacity onPress={() => {}}>
+                <TouchableOpacity
+                  onPress={() => {
+                    navigate("OrderFormScreen", { instrument: item });
+                  }}
+                >
                   <Text>{item.name}</Text>
                 </TouchableOpacity>
               )}
-            />
-            {/* TODO: move button to instrument screen */}
-            <Button
-              title='Add'
-              onPress={() =>
-                createOrder({
-                  instrumentId: 1,
-                  amount: 100,
-                  price: 20,
-                  action: "buy",
-                })
-              }
             />
           </>
         )}

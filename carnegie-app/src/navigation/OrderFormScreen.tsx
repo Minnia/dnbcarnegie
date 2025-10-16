@@ -4,7 +4,7 @@ import OrderForm from "../forms/OrderForm";
 
 type OrderFormScreenParamsList = {
   OrderFormScreen: {
-    order: Order;
+    order?: Order;
     instrument: Instrument;
   };
 };
@@ -13,13 +13,7 @@ const OrderFormScreen = () => {
   const {
     params: { order, instrument },
   } = useRoute<RouteProp<OrderFormScreenParamsList, "OrderFormScreen">>();
-  return (
-    <OrderForm
-      order={order}
-      instrument={instrument}
-      orderAction={order.action}
-    />
-  );
+  return <OrderForm order={order} instrument={instrument} />;
 };
 
 export default OrderFormScreen;

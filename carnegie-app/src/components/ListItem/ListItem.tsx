@@ -6,7 +6,7 @@ import * as S from "./styled";
 import { themes } from "../../core/themes";
 
 const ListItem = ({ order }: { order: Order }) => {
-  const { data: instruments } = useGetInstruments();
+  const { data: instruments, isLoading } = useGetInstruments();
 
   const match = findMatchingInstrument(order, instruments || []);
 
@@ -44,7 +44,9 @@ const ListItem = ({ order }: { order: Order }) => {
           </Text>
         </View>
         <S.Section position='left' gap={4}>
-          <S.InstrumentName>{match?.name}</S.InstrumentName>
+          <S.InstrumentName>
+            {isLoading ? "Loading..." : match?.name}
+          </S.InstrumentName>
           <Text
             style={{
               fontSize: 14,

@@ -14,6 +14,7 @@ const OrderScreen = () => {
   const {
     params: { order },
   } = useRoute<RouteProp<OrderScreenParamList, "OrderScreen">>();
+  // TODO: sometimes the order can't be deleted but no error is thrown
   return <Instrument order={order} />;
 };
 

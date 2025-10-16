@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { OrderStack } from "./OrderStack";
 import OrderManagement from "../screens/OrderManagement";
+import { OrderManagementStack } from "./OrderManagementStack";
 
 export const BottomTabNavigation = () => {
   const { Navigator, Screen } = createBottomTabNavigator();
@@ -11,7 +12,7 @@ export const BottomTabNavigation = () => {
         options={{ headerShown: false }}
         component={OrderStack}
       />
-      <Screen name='OrderManagement' component={OrderManagement} />
+      <Screen name='OrderManagement' component={OrderManagementStack} />
     </Navigator>
   );
 };
