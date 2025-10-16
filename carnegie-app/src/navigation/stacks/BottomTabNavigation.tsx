@@ -1,6 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { OrderStack } from "./OrderStack";
-import OrderManagement from "../screens/OrderManagement";
 import { OrderManagementStack } from "./OrderManagementStack";
 
 export const BottomTabNavigation = () => {
