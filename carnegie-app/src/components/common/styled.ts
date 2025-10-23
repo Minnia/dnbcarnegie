@@ -3,16 +3,17 @@ import tokens from "../../core/tokens";
 import { themes } from "../../core/themes";
 import { DimensionValue, FlexAlignType, TextStyle } from "react-native";
 
-export const Card = styled.View<{ backgroundColor?: string }>(
-  ({ backgroundColor }) => ({
-    backgroundColor: backgroundColor || themes.light.colors.white,
-    padding: tokens.BASELINE * 2,
-    height: 150,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: tokens.BASELINE,
-  })
-);
+export const Card = styled.View<{
+  backgroundColor?: string;
+  height?: DimensionValue;
+}>(({ backgroundColor, height }) => ({
+  backgroundColor: backgroundColor || themes.light.colors.white,
+  padding: tokens.BASELINE * 2,
+  height: height || 150,
+  justifyContent: "center",
+  alignItems: "center",
+  borderRadius: tokens.BASELINE,
+}));
 
 export const StyledText = styled.Text<{
   fontSize?: number;
