@@ -4,7 +4,6 @@ import ordersEndpoints from "../orders.endpoints";
 import { queryClient } from "../../integrations";
 
 const useCreateOrder = () => {
-  // Create order logic here
   const mutation = useMutation({
     mutationFn: async (order: OrderRequest) => {
       const response = await ordersEndpoints.addOrder(order);
