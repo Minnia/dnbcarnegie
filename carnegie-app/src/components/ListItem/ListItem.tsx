@@ -13,11 +13,6 @@ const ListItem = ({ order }: { order: Order }) => {
   const isBuy = order.action === "buy";
   const total = order.amount * order.price;
 
-  const editedOrder = {
-    ...order,
-    amount: order.amount + 10,
-  };
-
   return (
     <>
       <S.Container>
