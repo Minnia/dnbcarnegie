@@ -40,7 +40,7 @@ const Instrument = ({
   return (
     <Suspense fallback={<Text>Loading...</Text>}>
       <SafeAreaView style={{ padding: 16 }}>
-        <ScrollView style={{ height: "100%" }}>
+        <ScrollView style={{}}>
           <Card
             backgroundColor='#afc39cff'
             style={{

@@ -1,8 +1,16 @@
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import tokens from "../../core/tokens";
 import { StyledText } from "../common/styled";
 
-const OrderDetails = ({ label, value }: { label: string; value: string }) => {
+const OrderDetails = ({
+  label,
+  value,
+  color,
+}: {
+  label: string;
+  value: string;
+  color?: string;
+}) => {
   return (
     <View style={{ flex: 1 }}>
       <StyledText
@@ -15,7 +23,7 @@ const OrderDetails = ({ label, value }: { label: string; value: string }) => {
       >
         {label}
       </StyledText>
-      <StyledText fontWeight='bold' textAlign='center'>
+      <StyledText color={color} fontWeight='bold' textAlign='center'>
         {value}
       </StyledText>
     </View>
