@@ -18,13 +18,14 @@ export const OrderManagementStack = () => {
         component={OrderManagement}
       />
       <Screen
-        name='OrderFormScreen'
+        name='Order form'
         component={OrderFormScreen}
         options={({ navigation }) => ({
           headerLeft: () => {
             return <HeaderLeft navigation={navigation} />;
           },
           presentation: "modal",
+          title: "Manage order",
         })}
       />
     </Navigator>
