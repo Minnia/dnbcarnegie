@@ -1,8 +1,8 @@
-import { Button, Text, View } from "react-native";
-import { RouteProp, useRoute } from "@react-navigation/native";
+import { Alert } from "react-native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { Order } from "../../api/types";
 import Instrument from "../../components/Instrument";
-import { SafeAreaView } from "react-native-safe-area-context";
+import useDeleteOrder from "../../api/hooks/useDeleteOrder";
 
 type OrderScreenParamList = {
   OrderScreen: {
@@ -14,8 +14,18 @@ const OrderScreen = () => {
   const {
     params: { order },
   } = useRoute<RouteProp<OrderScreenParamList, "OrderScreen">>();
+  const { goBack } = useNavigation<any>();
+  const { mutateAsync: deleteOrder } = useDeleteOrder(order.id);
+  const handleDelete = async () => {
+    try {
+      await deleteOrder();
+      goBack();
+    } catch (error) {
+      Alert.alert("Error", "Failed to delete the order. Please try again.");
+    }
+  };
   // TODO: sometimes the order can't be deleted but no error is thrown
-  return <Instrument order={order} />;
+  return <Instrument handleDelete={handleDelete} order={order} />;
 };
 
 export default OrderScreen;
