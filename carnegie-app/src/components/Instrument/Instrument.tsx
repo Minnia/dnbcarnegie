@@ -45,7 +45,6 @@ const Instrument = ({
             backgroundColor='#afc39cff'
             style={{
               padding: 16,
-              height: 150,
               justifyContent: "center",
               alignItems: "center",
               borderRadius: 8,
