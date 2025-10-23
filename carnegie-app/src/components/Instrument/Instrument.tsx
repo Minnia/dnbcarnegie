@@ -42,7 +42,7 @@ const Instrument = ({
       <SafeAreaView style={{ padding: 16 }}>
         <ScrollView style={{}}>
           <Card
-            backgroundColor='#afc39cff'
+            backgroundColor={themes.light.colors.cardBackground}
             style={{
               padding: 16,
               justifyContent: "center",
