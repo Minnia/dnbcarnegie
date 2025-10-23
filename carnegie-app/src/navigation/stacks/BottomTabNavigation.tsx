@@ -11,7 +11,7 @@ export const BottomTabNavigation = () => {
         options={{ headerShown: false }}
         component={OrderStack}
       />
-      <Screen name='OrderManagement' component={OrderManagementStack} />
+      <Screen name='Create order' component={OrderManagementStack} />
     </Navigator>
   );
 };
