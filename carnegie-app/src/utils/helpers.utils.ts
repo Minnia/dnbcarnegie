@@ -28,3 +28,12 @@ export const fuzzySearch = (query: string, items: any[]): any[] => {
     });
   });
 };
+
+export const formattedDate = (date: Date) => {
+  return new Intl.DateTimeFormat("sv-SE", {
+    day: "numeric",
+    month: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(date);
+};
