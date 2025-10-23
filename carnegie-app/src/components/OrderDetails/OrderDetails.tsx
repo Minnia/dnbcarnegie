@@ -1,6 +1,7 @@
 import { View } from "react-native";
 import tokens from "../../core/tokens";
 import { StyledText } from "../common/styled";
+import { themes } from "../../core/themes";
 
 const OrderDetails = ({
   label,
@@ -16,7 +17,7 @@ const OrderDetails = ({
       <StyledText
         style={{
           fontSize: tokens.FONT_SIZE.SMALL,
-          color: "#000000ff",
+          color: themes.light.colors.text,
           marginBottom: tokens.BASELINE / 2,
           textAlign: "center",
         }}
