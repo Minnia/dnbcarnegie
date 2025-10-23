@@ -1,19 +1,17 @@
-import { Button, Text, TouchableOpacity, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import useCreateOrder from "../../api/hooks/useCreateOrder";
-import { FlatList, TextInput } from "react-native-gesture-handler";
+import { TouchableOpacity, View } from "react-native";
+import { FlatList } from "react-native-gesture-handler";
 import useGetInstruments from "../../api/hooks/useGetInstruments";
 import { useState } from "react";
 import { fuzzySearch } from "../../utils/helpers.utils";
 import { useNavigation } from "@react-navigation/native";
+import { Container, Spacer, StyledText } from "../../components/common/styled";
+import Item from "../../components/common/Item";
+import tokens from "../../core/tokens";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { themes } from "../../core/themes";
+import Input from "../../components/common/Input";
 
 const OrderManagement = () => {
-  const {
-    mutateAsync: createOrder,
-    error,
-    isPending,
-    isSuccess,
-  } = useCreateOrder();
   const { data: instruments } = useGetInstruments();
   const { navigate } = useNavigation<any>();
 
@@ -25,30 +23,49 @@ const OrderManagement = () => {
 
   return (
     <>
-      {/* TODO: make this a common component */}
-      <View
-        style={{
-          padding: 16,
-          margin: 16,
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-          borderWidth: 1,
-        }}
+      <Input onChangeSearch={onChangeSearch} />
+      <Container
+        justifyContent='center'
+        alignItems='center'
+        style={{ flex: 1 }}
       >
-        <TextInput
-          onChangeText={(text) => onChangeSearch(text)}
-          placeholder='Instrument name'
-        />
-      </View>
-      <SafeAreaView
-        style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-      >
-        {!searchParam && <Text>Search for instruments</Text>}
+        {!searchParam && (
+          <View>
+            <Ionicons
+              style={{ textAlign: "center" }}
+              name='rocket-outline'
+              size={tokens.ICON.XLARGE}
+              color='black'
+            />
+            <StyledText>Search for instruments</StyledText>
+          </View>
+        )}
         {searchParam &&
           instruments &&
           fuzzySearch(searchParam, instruments).length === 0 && (
-            <Text>No matching instruments found</Text>
+            <Container
+              justifyContent='center'
+              alignItems='center'
+              style={{ flex: 1 }}
+            >
+              <Ionicons
+                style={{
+                  textAlign: "center",
+                }}
+                name='sad-outline'
+                size={tokens.ICON.XLARGE}
+                color='black'
+              />
+              <StyledText fontWeight='bold'>
+                No matching instruments found
+              </StyledText>
+              <StyledText
+                style={{ textAlign: "center" }}
+                fontSize={tokens.FONT_SIZE.SMALL}
+              >
+                Try a different search
+              </StyledText>
+            </Container>
           )}
         {searchParam && instruments && (
           <>
@@ -56,18 +73,32 @@ const OrderManagement = () => {
               data={fuzzySearch(searchParam, instruments)}
               keyExtractor={(item) => item.id.toString()}
               renderItem={({ item }) => (
-                <TouchableOpacity
-                  onPress={() => {
-                    navigate("OrderFormScreen", { instrument: item });
+                <Container
+                  key={item.id}
+                  flexDirection='column'
+                  justifyContent='flex-start'
+                  alignItems='flex-start'
+                  width={350}
+                  style={{
+                    borderBottomColor: "black",
+                    borderBottomWidth: 1,
                   }}
                 >
-                  <Text>{item.name}</Text>
-                </TouchableOpacity>
+                  <Spacer size={4} />
+                  <TouchableOpacity
+                    onPress={() => {
+                      navigate("Order form", { instrument: item });
+                    }}
+                  >
+                    <Item item={item.name} />
+                  </TouchableOpacity>
+                  <Spacer size={4} />
+                </Container>
               )}
             />
           </>
         )}
-      </SafeAreaView>
+      </Container>
     </>
   );
 };
