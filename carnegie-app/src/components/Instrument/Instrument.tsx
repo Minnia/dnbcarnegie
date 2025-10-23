@@ -26,7 +26,7 @@ const Instrument = ({
   const { data: instruments } = useGetInstruments();
   const instrument = findMatchingInstrument(order, instruments || []);
   const { data: orders } = useGetOrders();
-  console.log("orders", orders);
+
   const cachedOrder = orders?.find((o) => o.id === order.id) || order;
   const { navigate } = useNavigation<any>();
 
