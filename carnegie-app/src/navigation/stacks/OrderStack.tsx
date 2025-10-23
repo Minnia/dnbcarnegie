@@ -14,7 +14,7 @@ export const OrderStack = () => {
       <Screen name='Orders' component={OrdersScreen} />
       <Screen name='Order' component={OrderScreen} />
       <Screen
-        name='OrderForm'
+        name='Manage order'
         component={OrderFormScreen}
         options={({ navigation }) => ({
           headerLeft: () => {
