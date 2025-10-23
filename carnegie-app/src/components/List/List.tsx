@@ -5,6 +5,7 @@ import { Order } from "../../api/types";
 import useGetOrders from "../../api/hooks/useGetOrders";
 import Title from "../Title";
 import { useNavigation } from "@react-navigation/native";
+import tokens from "../../core/tokens";
 
 const List = () => {
   const { data: orders, isLoading, error: fetchError } = useGetOrders();
@@ -59,7 +60,7 @@ const List = () => {
     >
       <SectionList
         stickySectionHeadersEnabled={false}
-        style={{ margin: 8 }}
+        style={{ margin: tokens.BASELINE }}
         sections={sections}
         showsVerticalScrollIndicator
         renderSectionHeader={({ section: { title } }) => (
@@ -73,8 +74,9 @@ const List = () => {
               <TouchableOpacity
                 onPress={() => navigate("Order", { order: item })}
                 style={{
-                  backgroundColor: "lightblue",
-                  marginBottom: 10,
+                  backgroundColor: "#afc39cff",
+                  borderRadius: tokens.BASELINE,
+                  marginBottom: tokens.BASELINE,
                   marginLeft: "auto",
                   marginRight: "auto",
                 }}
