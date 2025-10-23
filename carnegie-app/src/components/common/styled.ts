@@ -18,11 +18,13 @@ export const StyledText = styled.Text<{
   fontSize?: number;
   fontWeight?: "normal" | "bold";
   color?: string;
-}>(({ fontSize, fontWeight, color }) => ({
+  textAlign?: TextStyle["textAlign"];
+}>(({ fontSize, fontWeight, color, textAlign }) => ({
   fontSize: fontSize || tokens.FONT_SIZE.DEFAULT,
   fontWeight: (fontWeight ||
     tokens.FONT_WEIGHT.NORMAL) as TextStyle["fontWeight"],
   color: color || themes.light.colors.text,
+  textAlign: textAlign || "left",
 }));
 
 export const Container = styled.View<{
