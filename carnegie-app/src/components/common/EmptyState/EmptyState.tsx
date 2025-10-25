@@ -1,29 +1,29 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
-
 import tokens from "../../../core/tokens";
-import { Container, StyledText } from "../styled";
+import { Container, Spacer, StyledText } from "../styled";
 import { IconProps } from "@expo/vector-icons/build/createIconSet";
 import Button from "../Button";
+import { Variant } from "../types";
+import { View } from "react-native";
 
 const EmptyState = ({
   text,
   subtitle,
-  icon,
   iconName,
   cta,
   ctaTitle,
+  variant,
 }: {
   text: string;
   subtitle?: string;
-  icon?: string;
-  // TODO: type
-  iconName?: IconProps<any>["name"];
+  iconName?: IconProps<keyof typeof Ionicons.glyphMap>["name"];
   cta?: () => void;
   ctaTitle?: string;
+  variant?: Variant;
 }) => {
   return (
     <Container justifyContent='center' alignItems='center' style={{ flex: 1 }}>
-      {icon && iconName && (
+      {iconName && (
         <Ionicons
           style={{
             textAlign: "center",
@@ -35,14 +35,20 @@ const EmptyState = ({
       )}
       <StyledText fontWeight='bold'>{text}</StyledText>
       {subtitle && (
-        <StyledText
-          style={{ textAlign: "center" }}
-          fontSize={tokens.FONT_SIZE.SMALL}
-        >
-          {subtitle}
-        </StyledText>
+        <View>
+          <StyledText textAlign='center' fontSize={tokens.FONT_SIZE.SMALL}>
+            {subtitle}
+          </StyledText>
+          <Spacer size={tokens.BASELINE * 2} />
+        </View>
       )}
-      {cta && <Button title={ctaTitle || "Try again"} onPress={cta} />}
+      {cta && (
+        <Button
+          variant={variant || "primary"}
+          title={ctaTitle || "Try again"}
+          onPress={cta}
+        />
+      )}
     </Container>
   );
 };
