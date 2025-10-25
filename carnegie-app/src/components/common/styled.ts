@@ -3,37 +3,35 @@ import tokens from "../../core/tokens";
 import { themes } from "../../core/themes";
 import { DimensionValue, FlexAlignType, TextStyle } from "react-native";
 
-export const Card = styled.View<{
-  backgroundColor?: string;
-  height?: DimensionValue;
-}>(({ backgroundColor, height }) => ({
-  backgroundColor: backgroundColor || themes.light.colors.white,
-  padding: tokens.BASELINE * 2,
-  height: height || 150,
-  justifyContent: "center",
-  alignItems: "center",
-  borderRadius: tokens.BASELINE,
-}));
-
 export const StyledText = styled.Text<{
   fontSize?: number;
   fontWeight?: "normal" | "bold";
   color?: string;
   textAlign?: TextStyle["textAlign"];
-}>(({ fontSize, fontWeight, color, textAlign }) => ({
+  paddingHorizontal?: number;
+}>(({ fontSize, fontWeight, color, textAlign, paddingHorizontal }) => ({
   fontSize: fontSize || tokens.FONT_SIZE.DEFAULT,
   fontWeight: (fontWeight ||
     tokens.FONT_WEIGHT.NORMAL) as TextStyle["fontWeight"],
   color: color || themes.light.colors.text,
+  paddingHorizontal: paddingHorizontal || 0,
   textAlign: textAlign || "left",
 }));
 
 export const Container = styled.View<{
   flexDirection?: "row" | "column";
+  borderRadius?: number;
   backgroundColor?: string;
   height?: DimensionValue;
   width?: DimensionValue;
   alignItems?: FlexAlignType;
+  paddingHorizontal?: number;
+  paddingVertical?: number;
+  shadowColor?: string;
+  shadowOffset?: { width: number; height: number };
+  shadowOpacity?: number;
+  shadowRadius?: number;
+  elevation?: number;
   justifyContent?:
     | "center"
     | "flex-start"
@@ -45,18 +43,34 @@ export const Container = styled.View<{
 }>(
   ({
     flexDirection,
+    borderRadius,
     backgroundColor,
     height,
     width,
     alignItems,
     justifyContent,
+    paddingHorizontal,
+    paddingVertical,
+    shadowColor,
+    shadowOffset,
+    shadowOpacity,
+    shadowRadius,
+    elevation,
   }) => ({
     flexDirection: flexDirection || "column",
-    backgroundColor: backgroundColor || themes.light.colors.background,
+    borderRadius: borderRadius || 0,
+    backgroundColor: backgroundColor || "transparent",
     ...(height && { height }),
     ...(width && { width }),
     ...(alignItems && { alignItems }),
     ...(justifyContent && { justifyContent }),
+    ...(paddingHorizontal && { paddingHorizontal }),
+    ...(paddingVertical && { paddingVertical }),
+    ...(shadowColor && { shadowColor }),
+    ...(shadowOffset && { shadowOffset }),
+    ...(shadowOpacity && { shadowOpacity }),
+    ...(shadowRadius && { shadowRadius }),
+    ...(elevation && { elevation }),
   })
 );
 
