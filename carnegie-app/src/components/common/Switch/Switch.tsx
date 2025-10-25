@@ -1,7 +1,7 @@
-import { TouchableOpacity, View, Animated } from "react-native";
+import { TouchableOpacity, Animated } from "react-native";
 import { useEffect, useRef } from "react";
 import { themes } from "../../../core/themes";
-import { StyledText } from "../styled";
+import { Container, StyledText } from "../styled";
 import tokens from "../../../core/tokens";
 
 interface TextSwitchProps {
@@ -11,6 +11,8 @@ interface TextSwitchProps {
   rightText: string;
   activeColor?: string;
   inactiveColor?: string;
+  width?: number;
+  height?: number;
 }
 
 const TextSwitch = ({
@@ -20,6 +22,8 @@ const TextSwitch = ({
   rightText,
   activeColor = themes.light.colors.success,
   inactiveColor = "#E5E7EB",
+  width = 200,
+  height = tokens.ICON.XLARGE,
 }: TextSwitchProps) => {
   const animation = useRef(new Animated.Value(value ? 1 : 0)).current;
 
@@ -41,61 +45,61 @@ const TextSwitch = ({
       activeOpacity={1}
       onPress={() => onValueChange(!value)}
       style={{
-        width: 200,
-        height: 48,
+        width,
+        height,
         backgroundColor: inactiveColor,
-        borderRadius: 24,
+        borderRadius: tokens.BASELINE * 2,
         flexDirection: "row",
         alignItems: "center",
         position: "relative",
-        padding: 4,
+        padding: tokens.BASELINE / 2,
       }}
     >
       <Animated.View
         style={{
           position: "absolute",
           left: tokens.BASELINE / 2,
-          width: 96,
-          height: 40,
+          width: width / 2,
+          height: height - tokens.BASELINE,
           backgroundColor: activeColor,
-          borderRadius: 20,
+          borderRadius: tokens.BASELINE * 2,
           transform: [{ translateX: thumbPosition }],
         }}
       />
 
-      <View
+      <Container
+        alignItems='center'
+        justifyContent='center'
         style={{
           flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
           zIndex: 1,
         }}
       >
         <StyledText
           fontSize={tokens.FONT_SIZE.DEFAULT}
           fontWeight={value ? "bold" : "normal"}
-          color={!value ? "#FFFFFF" : "#6B7280"}
+          color={!value ? themes.light.colors.white : themes.light.colors.text}
         >
           {leftText}
         </StyledText>
-      </View>
+      </Container>
 
-      <View
+      <Container
+        alignItems='center'
+        justifyContent='center'
         style={{
           flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
           zIndex: 1,
         }}
       >
         <StyledText
           fontSize={tokens.FONT_SIZE.DEFAULT}
           fontWeight={value ? "normal" : "bold"}
-          color={value ? "#FFFFFF" : "#6B7280"}
+          color={value ? themes.light.colors.white : themes.light.colors.text}
         >
           {rightText}
         </StyledText>
-      </View>
+      </Container>
     </TouchableOpacity>
   );
 };
