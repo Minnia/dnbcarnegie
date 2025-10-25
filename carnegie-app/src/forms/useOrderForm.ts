@@ -8,8 +8,6 @@ import { Alert } from "react-native";
 const useOrderForm = (order: Order, instrumentId: Instrument["id"]) => {
   const editMode = !!order.id;
 
-  console.log("Edit mode:", editMode);
-
   const { mutateAsync: updateOrder } = useEditOrder(order?.id || 0);
   const { mutateAsync: createOrder } = useCreateOrder();
 
@@ -39,10 +37,6 @@ const useOrderForm = (order: Order, instrumentId: Instrument["id"]) => {
         goBack();
       }
     } catch (error) {
-      console.error(
-        `Failed to ${editMode ? "update" : "create"} order:`,
-        error
-      );
       Alert.alert(
         "Error",
         `Failed to ${
