@@ -14,7 +14,7 @@ export const OrderManagementStack = () => {
     <Navigator>
       <Screen
         name='Order management'
-        options={{ headerShown: false }}
+        options={{ headerShown: true }}
         component={OrderManagement}
       />
       <Screen
