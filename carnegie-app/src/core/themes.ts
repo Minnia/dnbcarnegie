@@ -3,6 +3,13 @@ const neutrals = {
   white: "#FFFFFF",
 };
 
+const brandColors = {
+  carnegieGreen: "#00693C",
+  buyGreen: "#E6F4ED",
+  sellRed: "#FDEDED",
+  carnegieRed: "#C1272D",
+};
+
 const background = {
   primaryGrey: "#EFEFE9",
   secondaryGrey: "#F5F5F5",
@@ -28,6 +35,12 @@ const brandPalette = {
   // Backgrounds
   background: background.primaryGrey,
 
+  // Brand
+  carnegieGreen: brandColors.carnegieGreen,
+  buyGreen: brandColors.buyGreen,
+  sellRed: brandColors.sellRed,
+  carnegieRed: brandColors.carnegieRed,
+
   // System
   error: systemColors.error,
   danger: systemColors.danger,
@@ -47,6 +60,10 @@ const brandPalette = {
 
 type ThemeConfig = {
   colors: {
+    carnegieGreen: string;
+    buyGreen: string;
+    sellRed: string;
+    carnegieRed: string;
     background: string;
     cardBackground: string;
     error: string;
