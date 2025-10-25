@@ -1,15 +1,15 @@
-import { TouchableOpacity, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import useGetInstruments from "../../api/hooks/useGetInstruments";
 import { useState } from "react";
-import { fuzzySearch } from "../../utils/helpers.utils";
+import { fuzzySearch, truncateText } from "../../utils/helpers.utils";
 import { useNavigation } from "@react-navigation/native";
-import { Container, Spacer, StyledText } from "../../components/common/styled";
+import { Container, Spacer } from "../../components/common/styled";
 import Item from "../../components/common/Item";
 import tokens from "../../core/tokens";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { themes } from "../../core/themes";
 import Input from "../../components/common/Input";
+import EmptyState from "../../components/common/EmptyState";
+import { themes } from "../../core/themes";
+import { Instrument } from "../../api/types";
 
 const OrderManagement = () => {
   const { data: instruments } = useGetInstruments();
@@ -21,82 +21,82 @@ const OrderManagement = () => {
     setSearchParam(search);
   };
 
+  const noMatchingInstrument =
+    searchParam &&
+    instruments &&
+    fuzzySearch(searchParam, instruments).length === 0;
+
   return (
     <>
-      <Input onChangeSearch={onChangeSearch} />
+      <Container
+        backgroundColor={themes.light.colors.white}
+        style={{ borderWidth: 1, borderColor: themes.light.colors.background }}
+      >
+        <Input
+          placeholder='Search for instruments'
+          iconName='search-outline'
+          onChangeSearch={onChangeSearch}
+          style={{
+            margin: tokens.BASELINE,
+            backgroundColor: themes.light.colors.white,
+            shadowColor: themes.light.colors.black,
+
+            borderWidth: 1,
+            borderColor: themes.light.colors.carnegieGreen,
+          }}
+        />
+      </Container>
+      <Spacer size={tokens.BASELINE * 2} />
       <Container
         justifyContent='center'
         alignItems='center'
         style={{ flex: 1 }}
       >
         {!searchParam && (
-          <View>
-            <Ionicons
-              style={{ textAlign: "center" }}
-              name='rocket-outline'
-              size={tokens.ICON.XLARGE}
-              color='black'
-            />
-            <StyledText>Search for instruments</StyledText>
-          </View>
+          <EmptyState
+            text='Search for instruments'
+            subtitle='Your next order is just a few taps away'
+            iconName='rocket-outline'
+          />
         )}
-        {searchParam &&
-          instruments &&
-          fuzzySearch(searchParam, instruments).length === 0 && (
-            <Container
-              justifyContent='center'
-              alignItems='center'
-              style={{ flex: 1 }}
-            >
-              <Ionicons
-                style={{
-                  textAlign: "center",
-                }}
-                name='sad-outline'
-                size={tokens.ICON.XLARGE}
-                color='black'
-              />
-              <StyledText fontWeight='bold'>
-                No matching instruments found
-              </StyledText>
-              <StyledText
-                style={{ textAlign: "center" }}
-                fontSize={tokens.FONT_SIZE.SMALL}
-              >
-                Try a different search
-              </StyledText>
-            </Container>
-          )}
-        {searchParam && instruments && (
-          <>
-            <FlatList
-              data={fuzzySearch(searchParam, instruments)}
-              keyExtractor={(item) => item.id.toString()}
-              renderItem={({ item }) => (
-                <Container
-                  key={item.id}
-                  flexDirection='column'
-                  justifyContent='flex-start'
-                  alignItems='flex-start'
-                  width={350}
-                  style={{
-                    borderBottomColor: "black",
-                    borderBottomWidth: 1,
-                  }}
-                >
-                  <Spacer size={4} />
-                  <TouchableOpacity
-                    onPress={() => {
-                      navigate("Order form", { instrument: item });
-                    }}
-                  >
-                    <Item item={item.name} />
-                  </TouchableOpacity>
-                  <Spacer size={4} />
-                </Container>
-              )}
+        {noMatchingInstrument && (
+          <Container
+            justifyContent='center'
+            alignItems='center'
+            style={{ flex: 1 }}
+          >
+            <EmptyState
+              text='No matching instruments found'
+              subtitle='Try a different search'
+              iconName='sad-outline'
             />
-          </>
+          </Container>
+        )}
+        {searchParam && instruments && (
+          <FlatList
+            data={fuzzySearch(searchParam, instruments)}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }: { item: Instrument }) => (
+              <Container
+                key={item.id}
+                flexDirection='column'
+                justifyContent='flex-start'
+                alignItems='flex-start'
+                width={350}
+              >
+                <Spacer size={4} />
+                <Item
+                  onPress={() => {
+                    navigate("Order form", { instrument: item });
+                  }}
+                  leftIcon='podium-outline'
+                  rightIcon='arrow-forward-outline'
+                  item={item}
+                />
+                <Spacer size={4} />
+              </Container>
+            )}
+          />
         )}
       </Container>
     </>
