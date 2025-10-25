@@ -1,26 +1,21 @@
-import { Alert, Button, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import useGetInstruments from "../../api/hooks/useGetInstruments";
-import { Order } from "../../api/types";
-import {
-  findMatchingInstrument,
-  formattedDate,
-} from "../../utils/helpers.utils";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Order as OrderType } from "../../api/types";
+import { findMatchingInstrument } from "../../utils/helpers.utils";
 import { useNavigation } from "@react-navigation/native";
 import useGetOrders from "../../api/hooks/useGetOrders";
 import { Suspense } from "react";
 import { ScrollView } from "react-native-gesture-handler";
-import StickyFooter from "../common/StickyFooter";
-import OrderDetails from "../OrderDetails";
-import * as S from "./styled";
-import { Card } from "../common/styled";
+import { Container, Spacer, StyledText } from "../common/styled";
 import { themes } from "../../core/themes";
+import Order from "../Order/Order";
+import tokens from "../../core/tokens";
 
 const Instrument = ({
   order,
   handleDelete,
 }: {
-  order: Order;
+  order: OrderType;
   handleDelete: () => void;
 }) => {
   const { data: instruments } = useGetInstruments();
@@ -30,89 +25,63 @@ const Instrument = ({
   const cachedOrder = orders?.find((o) => o.id === order.id) || order;
   const { navigate } = useNavigation<any>();
 
-  const handleAlert = () => {
-    Alert.alert("Confirmation", "Are you sure you want to delete this order?", [
-      { text: "Cancel", style: "cancel" },
-      { text: "OK", onPress: () => handleDelete() },
-    ]);
-  };
-
   return (
     <Suspense fallback={<Text>Loading...</Text>}>
-      <SafeAreaView style={{ padding: 16 }}>
-        <ScrollView style={{}}>
-          <Card
-            backgroundColor={themes.light.colors.cardBackground}
-            style={{
-              padding: 16,
-              justifyContent: "center",
-              alignItems: "center",
-              borderRadius: 8,
-            }}
-          >
-            <View>
-              <Text
-                style={{ fontWeight: "500", textAlign: "center", fontSize: 16 }}
+      <ScrollView
+        contentContainerStyle={{
+          padding: tokens.BASELINE * 2,
+        }}
+        style={{ flexGrow: 1 }}
+      >
+        <Container
+          height={150}
+          backgroundColor={themes.light.colors.buyGreen}
+          paddingHorizontal={tokens.BASELINE * 2}
+          paddingVertical={tokens.BASELINE * 2}
+          justifyContent='center'
+          alignItems='center'
+          borderRadius={tokens.BASELINE}
+          shadowColor={themes.light.colors.black}
+          shadowOffset={{ width: 0, height: 2 }}
+          shadowOpacity={0.25}
+          shadowRadius={3.84}
+          elevation={5}
+        >
+          <View>
+            <StyledText fontWeight='bold' textAlign='center'>
+              {instrument?.name}
+            </StyledText>
+            <StyledText textAlign='center'>{instrument?.ticker}</StyledText>
+            <Spacer size={tokens.BASELINE} />
+            <Container
+              flexDirection='row'
+              justifyContent='center'
+              backgroundColor={themes.light.colors.carnegieGreen}
+              borderRadius={tokens.BASELINE}
+              style={{
+                borderWidth: 1,
+                borderColor: themes.light.colors.white,
+              }}
+              width={150}
+            >
+              <StyledText
+                fontWeight='bold'
+                color={themes.light.colors.white}
+                fontSize={tokens.FONT_SIZE.LARGE}
               >
-                {instrument?.name}
-              </Text>
-              <Text style={{ textAlign: "center", fontSize: 14 }}>
-                {instrument?.ticker}
-              </Text>
-            </View>
-          </Card>
-          <View style={{ gap: 24, marginTop: 24 }}>
-            <S.TextContainer>
-              <OrderDetails
-                label='Action'
-                value={cachedOrder.action}
-                color={cachedOrder.action === "buy" ? "#008000" : "#ff0000"}
-              />
-              <OrderDetails
-                label='Amount'
-                value={cachedOrder.amount.toString()}
-              />
-            </S.TextContainer>
-
-            <S.TextContainer>
-              <OrderDetails
-                label='Price per unit'
-                value={`${cachedOrder.price} kr`}
-              />
-
-              <OrderDetails
-                label='Total'
-                value={(cachedOrder.price * cachedOrder.amount).toFixed(2)}
-              />
-            </S.TextContainer>
-
-            <S.TextContainer>
-              <OrderDetails
-                label='Created'
-                value={formattedDate(new Date(cachedOrder.createdAt))}
-              />
-              <OrderDetails
-                label='Updated at'
-                value={formattedDate(new Date(cachedOrder.updatedAt))}
-              />
-            </S.TextContainer>
-
-            <StickyFooter>
-              <Button
-                title='Edit Order'
-                onPress={() =>
-                  navigate("Manage order", { order: cachedOrder, instrument })
-                }
-              />
-              <Button
-                title='Delete Order'
-                onPress={handleAlert}
-                color={themes.light.colors.error}
-              />
-            </StickyFooter>
+                {order.action.toUpperCase()}
+              </StyledText>
+            </Container>
           </View>
-        </ScrollView>
-      </SafeAreaView>
+        </Container>
+        <Order
+          order={cachedOrder}
+          onPress={() =>
+            navigate("Manage order", { order: cachedOrder, instrument })
+          }
+          onDelete={handleDelete}
+        />
+      </ScrollView>
     </Suspense>
   );
 };
