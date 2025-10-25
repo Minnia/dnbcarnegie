@@ -37,3 +37,8 @@ export const formattedDate = (date: Date) => {
     minute: "2-digit",
   }).format(date);
 };
+
+export const truncateText = (text: string, maxLength: number = 25) => {
+  if (text.length <= maxLength) return text;
+  return `${text.slice(0, maxLength)}...`;
+};
