@@ -1,14 +1,29 @@
-import { TouchableOpacity, ViewStyle } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { StyledText } from "../styled";
 import { themes } from "../../../core/themes";
+import * as S from "./styled";
+import { Variant } from "../types";
 
 type Props = {
   title: string;
   onPress: () => void;
   fontSize?: number;
   fontWeight?: "normal" | "bold";
-  style?: ViewStyle;
-  variant?: "primary" | "secondary" | "success" | "error";
+  variant: Variant;
+  disabled?: boolean;
+  size?: "small" | "medium" | "large";
+};
+
+const getButtonTextColor = (variant: Variant) => {
+  switch (variant) {
+    case "primary":
+    case "secondary":
+    case "error":
+    case "success":
+      return themes.light.colors.white;
+    default:
+      return themes.light.colors.text;
+  }
 };
 
 const Button = ({
@@ -16,49 +31,21 @@ const Button = ({
   onPress,
   fontSize,
   fontWeight,
-  style,
   variant,
+  disabled,
+  size,
 }: Props) => {
-  switch (variant) {
-    case "primary":
-      style = {
-        backgroundColor: "#3B82F6",
-        paddingVertical: 12,
-        paddingHorizontal: 24,
-        borderRadius: 8,
-        alignItems: "center",
-        ...style,
-      };
-      break;
-    case "secondary":
-      style = {
-        backgroundColor: "#a25ba297",
-        paddingVertical: 12,
-        paddingHorizontal: 24,
-        borderRadius: 8,
-        alignItems: "center",
-        ...style,
-      };
-      break;
-    default:
-      style = {
-        backgroundColor: "#3B82F6",
-        paddingVertical: 12,
-        paddingHorizontal: 24,
-        borderRadius: 8,
-        alignItems: "center",
-        ...style,
-      };
-  }
   return (
-    <TouchableOpacity onPress={onPress} style={style}>
-      <StyledText
-        fontSize={fontSize}
-        fontWeight={fontWeight}
-        color={themes.light.colors.text}
-      >
-        {title}
-      </StyledText>
+    <TouchableOpacity onPress={onPress} disabled={disabled}>
+      <S.ButtonContainer size={size} disabled={disabled} variant={variant}>
+        <StyledText
+          fontSize={fontSize}
+          fontWeight={fontWeight}
+          color={getButtonTextColor(variant)}
+        >
+          {title}
+        </StyledText>
+      </S.ButtonContainer>
     </TouchableOpacity>
   );
 };
