@@ -1,14 +1,15 @@
 import { SectionList, Text, TouchableOpacity, View } from "react-native";
-import ListItem from "../ListItem";
+import OrderItem from "../OrderItem";
 import { Suspense, useMemo } from "react";
 import { Order } from "../../api/types";
 import useGetOrders from "../../api/hooks/useGetOrders";
 import Title from "../Title";
 import { useNavigation } from "@react-navigation/native";
 import tokens from "../../core/tokens";
+import EmptyState from "../common/EmptyState";
 
 const List = () => {
-  const { data: orders, isLoading, error: fetchError } = useGetOrders();
+  const { data: orders } = useGetOrders();
 
   const { navigate } = useNavigation<any>();
 
@@ -50,6 +51,18 @@ const List = () => {
     );
   }, [orders]);
 
+  if (!orders || orders.length === 0) {
+    return (
+      <EmptyState
+        text='No orders found'
+        subtitle='Try creating a new order'
+        iconName='document-outline'
+        cta={() => navigate("Create order")}
+        ctaTitle='Create order'
+      />
+    );
+  }
+
   return (
     <Suspense
       fallback={
@@ -74,14 +87,10 @@ const List = () => {
               <TouchableOpacity
                 onPress={() => navigate("Order", { order: item })}
                 style={{
-                  backgroundColor: "#afc39cff",
-                  borderRadius: tokens.BASELINE,
                   marginBottom: tokens.BASELINE,
-                  marginLeft: "auto",
-                  marginRight: "auto",
                 }}
               >
-                <ListItem order={item} />
+                <OrderItem order={item} />
               </TouchableOpacity>
             </>
           );
