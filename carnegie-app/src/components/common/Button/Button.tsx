@@ -32,12 +32,12 @@ const Button = ({
   fontSize,
   fontWeight,
   variant,
-  disabled,
+  disabled = false,
   size,
 }: Props) => {
   return (
     <TouchableOpacity onPress={onPress} disabled={disabled}>
-      <S.ButtonContainer size={size} disabled={disabled} variant={variant}>
+      <S.ButtonContainer size={size} variant={variant} disabled={disabled}>
         <StyledText
           fontSize={fontSize}
           fontWeight={fontWeight}

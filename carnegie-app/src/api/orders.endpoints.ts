@@ -1,5 +1,5 @@
 import apiClient from "./apiClient";
-import { Order, OrderRequest, OrdersResponse } from "./types";
+import { Order, OrderRequest, OrderResponse, OrdersResponse } from "./types";
 
 const ordersEndpoints = {
   getAllOrders: async (): Promise<Order[]> => {
@@ -10,34 +10,33 @@ const ordersEndpoints = {
       throw new Error("Failed to fetch orders");
     }
   },
-  addOrder: async (order: OrderRequest) => {
+  addOrder: async (order: OrderRequest): Promise<OrderResponse> => {
     try {
-      const { data } = await apiClient.post<OrderRequest>("/orders", order);
-      console.log("posted data", data);
+      const { data } = await apiClient.post<OrderResponse>("/orders", order);
       return data;
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   },
-  editOrder: async (id: Order["id"], order: OrderRequest) => {
+  editOrder: async (
+    id: Order["id"],
+    order: OrderRequest
+  ): Promise<OrderResponse> => {
     try {
-      const { data } = await apiClient.put<OrderRequest>(
+      const { data } = await apiClient.put<OrderResponse>(
         `/orders/${id}`,
         order
       );
-      console.log("edited order", data);
       return data;
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   },
   deleteOrder: async (id: Order["id"]) => {
     try {
-      const order = await apiClient.delete(`/orders/${id}`);
-      console.log("deleted order", order);
-      return order;
+      await apiClient.delete<Order>(`/orders/${id}`);
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   },
 };

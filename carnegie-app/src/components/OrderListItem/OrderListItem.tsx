@@ -1,13 +1,13 @@
 import { View } from "react-native";
 import { Order } from "../../api/types";
 import { findMatchingInstrument } from "../../utils/helpers.utils";
-import useGetInstruments from "../../api/hooks/useGetInstruments";
+import useGetInstruments from "../../api/hooks/instruments/useGetInstruments";
 import * as S from "./styled";
 import { themes } from "../../core/themes";
 import { Container, StyledText } from "../common/styled";
 import tokens from "../../core/tokens";
 
-const OrderItem = ({ order }: { order: Order }) => {
+const OrderListItem = ({ order }: { order: Order }) => {
   const { data: instruments, isLoading } = useGetInstruments();
 
   const match = findMatchingInstrument(order, instruments || []);
@@ -20,26 +20,24 @@ const OrderItem = ({ order }: { order: Order }) => {
       <Container
         flexDirection='row'
         borderRadius={tokens.BASELINE}
-        justifyContent='space-between'
         alignItems='center'
-        width={"100%"}
         backgroundColor={themes.light.colors.white}
         paddingHorizontal={tokens.BASELINE * 2}
         paddingVertical={tokens.BASELINE * 1.5}
+        shadowColor={themes.light.colors.black}
+        shadowOffset={{ width: 0, height: 2 }}
+        shadowOpacity={0.25}
+        width={"100%"}
+        shadowRadius={3.84}
+        elevation={5}
         style={{
           borderBottomWidth: 1,
           borderBottomColor: themes.light.colors.background,
-          borderRadius: tokens.BASELINE,
-          shadowColor: themes.light.colors.black,
-          shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: 0.25,
-          shadowRadius: 3.84,
-          elevation: 5,
         }}
       >
         <View>
           <StyledText fontSize={tokens.FONT_SIZE.XSMALL}>
-            {new Date(order.updatedAt).toLocaleDateString("sv-SE", {
+            {new Date(order.updatedAt).toLocaleDateString("en-US", {
               day: "numeric",
               month: "short",
             })}
@@ -62,9 +60,7 @@ const OrderItem = ({ order }: { order: Order }) => {
           </StyledText>
         </S.Section>
         <S.Section position='right' gap={2}>
-          <StyledText fontWeight='bold'>
-            {total.toLocaleString("sv-SE")} kr
-          </StyledText>
+          <StyledText fontWeight='bold'>{total} kr</StyledText>
           <StyledText fontSize={tokens.FONT_SIZE.SMALL}>
             {order.price} kr
           </StyledText>
@@ -74,4 +70,4 @@ const OrderItem = ({ order }: { order: Order }) => {
   );
 };
 
-export default OrderItem;
+export default OrderListItem;

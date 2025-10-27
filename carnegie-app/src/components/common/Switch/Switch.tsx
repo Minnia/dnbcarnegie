@@ -9,6 +9,8 @@ interface TextSwitchProps {
   onValueChange: (value: boolean) => void;
   leftText: string;
   rightText: string;
+  leftActiveColor?: string;
+  rightActiveColor?: string;
   activeColor?: string;
   inactiveColor?: string;
   width?: number;
@@ -21,6 +23,8 @@ const TextSwitch = ({
   leftText,
   rightText,
   activeColor = themes.light.colors.success,
+  rightActiveColor = themes.light.colors.carnegieRed,
+  leftActiveColor = themes.light.colors.carnegieGreen,
   inactiveColor = "#E5E7EB",
   width = 200,
   height = tokens.ICON.XLARGE,
@@ -41,66 +45,70 @@ const TextSwitch = ({
   });
 
   return (
-    <TouchableOpacity
-      activeOpacity={1}
-      onPress={() => onValueChange(!value)}
-      style={{
-        width,
-        height,
-        backgroundColor: inactiveColor,
-        borderRadius: tokens.BASELINE * 2,
-        flexDirection: "row",
-        alignItems: "center",
-        position: "relative",
-        padding: tokens.BASELINE / 2,
-      }}
-    >
-      <Animated.View
+    <Container alignItems='center' justifyContent='center'>
+      <TouchableOpacity
+        activeOpacity={1}
+        onPress={() => onValueChange(!value)}
         style={{
-          position: "absolute",
-          left: tokens.BASELINE / 2,
-          width: width / 2,
-          height: height - tokens.BASELINE,
-          backgroundColor: activeColor,
+          width,
+          height,
+          backgroundColor: inactiveColor,
           borderRadius: tokens.BASELINE * 2,
-          transform: [{ translateX: thumbPosition }],
-        }}
-      />
-
-      <Container
-        alignItems='center'
-        justifyContent='center'
-        style={{
-          flex: 1,
-          zIndex: 1,
+          flexDirection: "row",
+          alignItems: "center",
+          position: "relative",
+          padding: tokens.BASELINE / 2,
         }}
       >
-        <StyledText
-          fontSize={tokens.FONT_SIZE.DEFAULT}
-          fontWeight={value ? "bold" : "normal"}
-          color={!value ? themes.light.colors.white : themes.light.colors.text}
-        >
-          {leftText}
-        </StyledText>
-      </Container>
+        <Animated.View
+          style={{
+            position: "absolute",
+            left: tokens.BASELINE / 2,
+            width: width / 2,
+            height: height - tokens.BASELINE,
+            backgroundColor: activeColor,
+            borderRadius: tokens.BASELINE * 2,
+            transform: [{ translateX: thumbPosition }],
+          }}
+        />
 
-      <Container
-        alignItems='center'
-        justifyContent='center'
-        style={{
-          flex: 1,
-          zIndex: 1,
-        }}
-      >
-        <StyledText
-          fontSize={tokens.FONT_SIZE.DEFAULT}
-          fontWeight={value ? "normal" : "bold"}
-          color={value ? themes.light.colors.white : themes.light.colors.text}
+        <Container
+          alignItems='center'
+          justifyContent='center'
+          style={{
+            flex: 1,
+            zIndex: 1,
+          }}
         >
-          {rightText}
-        </StyledText>
-      </Container>
-    </TouchableOpacity>
+          <StyledText
+            fontSize={tokens.FONT_SIZE.DEFAULT}
+            fontWeight={value ? "bold" : "normal"}
+            color={
+              !value ? themes.light.colors.white : themes.light.colors.text
+            }
+          >
+            {leftText}
+          </StyledText>
+        </Container>
+
+        <Container
+          alignItems='center'
+          justifyContent='center'
+          style={{
+            flex: 1,
+            zIndex: 1,
+          }}
+        >
+          <StyledText
+            fontSize={tokens.FONT_SIZE.DEFAULT}
+            fontWeight={value ? "normal" : "bold"}
+            color={value ? themes.light.colors.white : themes.light.colors.text}
+          >
+            {rightText}
+          </StyledText>
+        </Container>
+      </TouchableOpacity>
+    </Container>
   );
 };
 

@@ -1,7 +1,7 @@
 import { FlatList } from "react-native-gesture-handler";
-import useGetInstruments from "../../api/hooks/useGetInstruments";
+import useGetInstruments from "../../api/hooks/instruments/useGetInstruments";
 import { useState } from "react";
-import { fuzzySearch, truncateText } from "../../utils/helpers.utils";
+import { fuzzySearch } from "../../utils/helpers.utils";
 import { useNavigation } from "@react-navigation/native";
 import { Container, Spacer } from "../../components/common/styled";
 import Item from "../../components/common/Item";
@@ -10,21 +10,26 @@ import Input from "../../components/common/Input";
 import EmptyState from "../../components/common/EmptyState";
 import { themes } from "../../core/themes";
 import { Instrument } from "../../api/types";
+import { InstrumentStackParamList } from "../navigation.types";
+import { Screens } from "../screen.types";
+import { Dimensions } from "react-native";
 
-const OrderManagement = () => {
+const InstrumentsScreen = () => {
   const { data: instruments } = useGetInstruments();
-  const { navigate } = useNavigation<any>();
+  const { navigate } = useNavigation<InstrumentStackParamList>();
 
   const [searchParam, setSearchParam] = useState("");
-
-  const onChangeSearch = (search: string) => {
-    setSearchParam(search);
-  };
 
   const noMatchingInstrument =
     searchParam &&
     instruments &&
     fuzzySearch(searchParam, instruments).length === 0;
+
+  const width = Dimensions.get("window").width - tokens.BASELINE * 4;
+
+  const onChangeSearch = (search: string) => {
+    setSearchParam(search);
+  };
 
   return (
     <>
@@ -34,19 +39,19 @@ const OrderManagement = () => {
       >
         <Input
           placeholder='Search for instruments'
-          iconName='search-outline'
-          onChangeSearch={onChangeSearch}
+          iconName={searchParam ? "close-outline" : "search-outline"}
+          onChangeText={onChangeSearch}
+          onClear={() => setSearchParam("")}
           style={{
             margin: tokens.BASELINE,
             backgroundColor: themes.light.colors.white,
             shadowColor: themes.light.colors.black,
-
             borderWidth: 1,
             borderColor: themes.light.colors.carnegieGreen,
           }}
         />
       </Container>
-      <Spacer size={tokens.BASELINE * 2} />
+      <Spacer size={16} />
       <Container
         justifyContent='center'
         alignItems='center'
@@ -82,12 +87,12 @@ const OrderManagement = () => {
                 flexDirection='column'
                 justifyContent='flex-start'
                 alignItems='flex-start'
-                width={350}
+                width={width}
               >
                 <Spacer size={4} />
                 <Item
                   onPress={() => {
-                    navigate("Order form", { instrument: item });
+                    navigate(Screens.ORDER_FORM, { instrument: item });
                   }}
                   leftIcon='podium-outline'
                   rightIcon='arrow-forward-outline'
@@ -103,4 +108,4 @@ const OrderManagement = () => {
   );
 };
 
-export default OrderManagement;
+export default InstrumentsScreen;

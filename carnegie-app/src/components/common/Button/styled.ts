@@ -3,7 +3,7 @@ import { themes } from "../../../core/themes";
 import tokens from "../../../core/tokens";
 import { Variant } from "../types";
 
-const getVariantStyle = (variant: Variant) => {
+const getVariantStyle = (variant: Variant, disabled?: boolean) => {
   switch (variant) {
     case "primary":
       return {
@@ -38,8 +38,9 @@ export const ButtonContainer = styled.View<{
   padding-vertical: ${tokens.BASELINE * 1.5 + "px"};
   padding-horizontal: ${tokens.BASELINE * 3 + "px"};
   border-radius: ${tokens.BASELINE + "px"};
-  background-color: ${({ variant }) => getVariantStyle(variant)};
-  opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
+  background-color: ${({ variant, disabled }) =>
+    getVariantStyle(variant, disabled)};
+  opacity: ${({ disabled }) => (disabled ? "0.5" : "1")};
   ${({ size }) =>
     size === "small"
       ? `padding-vertical: ${tokens.BASELINE + "px"};

@@ -1,7 +1,9 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { OrderStack } from "./OrderStack";
-import { OrderManagementStack } from "./OrderManagementStack";
+import { InstrumentsStack } from "./InstrumentsStack";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { themes } from "../../core/themes";
+import { Screens } from "../screen.types";
 
 export const BottomTabNavigation = () => {
   const { Navigator, Screen } = createBottomTabNavigator();
@@ -9,27 +11,34 @@ export const BottomTabNavigation = () => {
     <Navigator
       initialRouteName='Orders'
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
+        tabBarIcon: ({ focused, size }) => {
           let iconName;
-
-          if (route.name === "Orders") {
+          if (route.name === Screens.ORDERS_LIST) {
             iconName = focused ? "list-circle" : "list-circle-outline";
-          } else if (route.name === "Create order") {
+          } else if (route.name === Screens.ORDER_FORM) {
             iconName = focused ? "card" : "card-outline";
           }
-          return <Ionicons name={iconName as any} size={size} color={color} />;
+          return (
+            <Ionicons
+              name={iconName as keyof typeof Ionicons.glyphMap}
+              size={size}
+              color={themes.light.colors.carnegieGreen}
+            />
+          );
         },
+        tabBarActiveTintColor: themes.light.colors.carnegieGreen,
+        tabBarInactiveTintColor: "gray",
       })}
     >
       <Screen
-        name='Orders'
+        name={Screens.ORDERS_LIST}
         options={{ headerShown: false }}
         component={OrderStack}
       />
       <Screen
-        name='Create order'
+        name={Screens.ORDER_FORM}
         options={{ headerShown: false }}
-        component={OrderManagementStack}
+        component={InstrumentsStack}
       />
     </Navigator>
   );

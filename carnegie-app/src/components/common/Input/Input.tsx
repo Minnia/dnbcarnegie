@@ -1,45 +1,51 @@
-import { TextInput, ViewStyle } from "react-native";
+import { Dimensions, TextInput, ViewStyle } from "react-native";
 import { Container } from "../styled";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { themes } from "../../../core/themes";
 import tokens from "../../../core/tokens";
 
 const Input = ({
-  onChangeSearch,
+  onChangeText,
   placeholder = "Search",
   keyboardType = "default",
   onBlur,
+  onClear,
   iconName,
   style,
 }: {
-  onChangeSearch: (text: string) => void;
+  onChangeText: (text: string) => void;
   onBlur?: () => void;
+  onClear?: () => void;
   placeholder?: string;
   keyboardType?: "default" | "numeric";
-  iconName?: string;
+  iconName?: keyof typeof Ionicons.glyphMap;
   style?: ViewStyle;
 }) => {
   return (
     <Container
       paddingHorizontal={tokens.BASELINE * 2}
-      paddingVertical={tokens.BASELINE * 2}
       borderRadius={tokens.BASELINE}
+      height={Dimensions.get("window").height * 0.07}
       justifyContent='space-between'
       flexDirection='row'
       style={style}
     >
       <TextInput
-        onChangeText={(text) => onChangeSearch(text)}
+        onChangeText={(text) => onChangeText(text)}
         placeholder={placeholder}
         keyboardType={keyboardType}
         onBlur={onBlur}
       />
       {iconName && (
         <Ionicons
-          name={iconName as any}
+          onPress={onClear}
+          name={iconName}
           size={tokens.ICON.DEFAULT}
           color={themes.light.colors.text}
-          style={{ marginRight: tokens.BASELINE }}
+          style={{
+            marginRight: tokens.BASELINE,
+            paddingTop: tokens.BASELINE * 2,
+          }}
         />
       )}
     </Container>

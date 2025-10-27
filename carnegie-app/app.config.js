@@ -1,3 +1,5 @@
+import { Platform } from "react-native";
+
 export default {
   expo: {
     name: "carnegie-app",
@@ -29,7 +31,8 @@ export default {
       favicon: "./assets/favicon.png"
     },
     extra: {
-      apiBaseUrl: process.env.API_BASE_URL || ""
+      iosAPIBaseUrl:  process.env.API_BASE_URL || "",
+      androidAPIBaseUrl: process.env.ANDROID_API_BASE_URL || ""
     }
   }
 };

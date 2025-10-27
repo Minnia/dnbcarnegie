@@ -1,9 +1,23 @@
+import { StackNavigationProp } from "@react-navigation/stack";
 import { Text, TouchableOpacity } from "react-native";
+import tokens from "../../../../core/tokens";
+import { StyledText } from "../../styled";
 
-const HeaderLeft = ({ navigation }: { navigation: any }) => {
+const HeaderLeft = ({
+  navigation,
+}: {
+  navigation: StackNavigationProp<any>;
+}) => {
   return (
     <TouchableOpacity onPress={() => navigation.goBack()}>
-      <Text style={{ marginLeft: 10, fontSize: 16 }}>Cancel</Text>
+      <StyledText
+        fontSize={tokens.FONT_SIZE.LARGE}
+        style={{
+          marginLeft: tokens.BASELINE * 1.5,
+        }}
+      >
+        Cancel
+      </StyledText>
     </TouchableOpacity>
   );
 };

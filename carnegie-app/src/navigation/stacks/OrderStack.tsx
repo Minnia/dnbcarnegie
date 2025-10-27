@@ -2,19 +2,18 @@ import { createStackNavigator } from "@react-navigation/stack";
 import OrdersScreen from "../screens/OrdersScreen";
 import OrderScreen from "../screens/OrderScreen";
 import OrderFormScreen from "../OrderFormScreen";
-import { Text, TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import HeaderLeft from "../../components/common/ScreenHeaders/HeaderLeft";
+import { Screens } from "../screen.types";
 
 const { Navigator, Screen } = createStackNavigator();
 
 export const OrderStack = () => {
   return (
     <Navigator>
-      <Screen name='Orders' component={OrdersScreen} />
-      <Screen name='Order' component={OrderScreen} />
+      <Screen name={Screens.ORDERS_LIST} component={OrdersScreen} />
+      <Screen name={Screens.ORDER_DETAILS} component={OrderScreen} />
       <Screen
-        name='Manage order'
+        name={Screens.ORDER_FORM}
         component={OrderFormScreen}
         options={({ navigation }) => ({
           headerLeft: () => {

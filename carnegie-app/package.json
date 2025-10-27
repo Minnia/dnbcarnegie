@@ -6,12 +6,16 @@
     "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
+    "ios:14": "expo run:ios --device 'iPhone 14 Pro'",
+    "ios:13": "expo run:ios --device 'iPhone 13 mini'",
+    "android:small": "expo run:android --device 'Pixel_3a_API_30_x86'",
     "web": "expo start --web"
   },
   "dependencies": {
     "@emotion/native": "^11.11.0",
     "@emotion/react": "^11.14.0",
     "@expo/vector-icons": "^15.0.3",
+    "@react-native-async-storage/async-storage": "^2.2.0",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/bottom-tabs": "^7.4.8",
     "@react-navigation/native": "^7.1.18",

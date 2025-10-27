@@ -16,10 +16,6 @@ const background = {
   tertiaryGrey: "#CCCCCC",
 };
 
-const card = {
-  background: "#afc39cff",
-};
-
 const systemColors = {
   error: "#D62215",
   danger: "#b1622aff",
@@ -53,9 +49,6 @@ const brandPalette = {
 
   // Text
   text: textColors.black,
-
-  // Containers and cards
-  cardBackground: card.background,
 };
 
 type ThemeConfig = {
@@ -65,7 +58,6 @@ type ThemeConfig = {
     sellRed: string;
     carnegieRed: string;
     background: string;
-    cardBackground: string;
     error: string;
     danger: string;
     success: string;

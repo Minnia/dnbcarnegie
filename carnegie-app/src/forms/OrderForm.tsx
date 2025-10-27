@@ -1,4 +1,3 @@
-import { View } from "react-native";
 import { Instrument, Order } from "../api/types";
 import useOrderForm from "./useOrderForm";
 import { StyledText, Container, Spacer } from "../components/common/styled";
@@ -9,6 +8,9 @@ import { themes } from "../core/themes";
 import Input from "../components/common/Input";
 import { ScrollView } from "react-native-gesture-handler";
 import StickyFooter from "../components/common/StickyFooter";
+import OrderValue from "../components/TotalOrderSumCard/TotalOrderSumCard";
+import InstrumentCard from "../components/InstrumentCard";
+import { Dimensions, KeyboardAvoidingView, Platform } from "react-native";
 
 const OrderForm = ({
   order,
@@ -26,102 +28,86 @@ const OrderForm = ({
     editMode,
     action,
     setAction,
+    orderChanged,
   } = useOrderForm(order || ({} as Order), instrument.id);
 
   const orderValue = Number(price) * Number(amount);
 
   return (
-    <ScrollView
-      contentContainerStyle={{
-        padding: tokens.BASELINE * 2,
-      }}
-      style={{ flexGrow: 1 }}
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={
+        Platform.OS === "ios" ? Dimensions.get("window").height * 0.15 : 0
+      }
     >
-      <Container
-        height={100}
-        backgroundColor={themes.light.colors.buyGreen}
-        paddingHorizontal={tokens.BASELINE * 2}
-        paddingVertical={tokens.BASELINE * 2}
-        justifyContent='center'
-        alignItems='center'
-        borderRadius={tokens.BASELINE}
-        shadowColor={themes.light.colors.black}
-        shadowOffset={{ width: 0, height: 2 }}
-        shadowOpacity={0.25}
-        shadowRadius={3.84}
-        elevation={5}
+      <ScrollView
+        keyboardShouldPersistTaps='handled'
+        contentContainerStyle={{
+          padding: tokens.BASELINE * 2,
+        }}
+        style={{ flexGrow: 1 }}
       >
-        <View>
-          <StyledText fontWeight='bold' textAlign='center'>
-            {instrument?.name}
-          </StyledText>
-          <StyledText textAlign='center'>{instrument?.ticker}</StyledText>
-          <Spacer size={tokens.BASELINE} />
-        </View>
-      </Container>
-      <Spacer size={16} />
-      <Container
-        backgroundColor={themes.light.colors.white}
-        borderRadius={tokens.BASELINE}
-        paddingVertical={tokens.BASELINE}
-        shadowColor={themes.light.colors.black}
-        shadowOffset={{ width: 0, height: 2 }}
-        shadowOpacity={0.25}
-        shadowRadius={3.84}
-        elevation={5}
-      >
-        <StyledText
-          style={{ paddingHorizontal: tokens.BASELINE * 2 }}
-          fontWeight='bold'
-        >
-          Amount of unit
-        </StyledText>
-        <Input
-          placeholder={order?.amount?.toString() ?? "Amount"}
-          keyboardType='numeric'
-          onChangeSearch={(text) => setAmount(text)}
-          onBlur={() => setAmount(amount)}
-          style={{
-            margin: tokens.BASELINE,
-            backgroundColor: themes.light.colors.white,
-            shadowColor: themes.light.colors.black,
-
-            borderWidth: 1,
-            borderColor: themes.light.colors.carnegieGreen,
-          }}
-        />
+        <InstrumentCard instrument={instrument} />
         <Spacer size={16} />
-        <StyledText paddingHorizontal={tokens.BASELINE * 2} fontWeight='bold'>
-          Price of unit
-        </StyledText>
-        <Input
-          placeholder={order?.price?.toString() ?? "Price"}
-          keyboardType='numeric'
-          onChangeSearch={(text) => setPrice(text)}
-          onBlur={() => setPrice(price)}
-          style={{
-            margin: tokens.BASELINE,
-            backgroundColor: themes.light.colors.white,
-            shadowColor: themes.light.colors.black,
-
-            borderWidth: 1,
-            borderColor: themes.light.colors.carnegieGreen,
-          }}
-        />
-        <StyledText
-          paddingHorizontal={tokens.BASELINE * 2}
-          fontSize={tokens.FONT_SIZE.XSMALL}
+        <Container
+          backgroundColor={themes.light.colors.white}
+          borderRadius={tokens.BASELINE}
+          paddingVertical={tokens.BASELINE}
+          shadowColor={themes.light.colors.black}
+          shadowOffset={{ width: 0, height: 2 }}
+          shadowOpacity={0.25}
+          shadowRadius={3.84}
+          elevation={5}
         >
-          Price in SEK
-        </StyledText>
-        {editMode && (
-          <>
-            <Container
-              backgroundColor='transparent'
-              alignItems='center'
-              flexDirection='row'
-              justifyContent='center'
-            >
+          <StyledText
+            style={{ paddingHorizontal: tokens.BASELINE * 2 }}
+            fontWeight='bold'
+          >
+            Amount of unit
+          </StyledText>
+
+          <Input
+            placeholder={order?.amount?.toString() ?? "Amount"}
+            keyboardType='numeric'
+            onChangeText={(text) => setAmount(text)}
+            onBlur={() => setAmount(amount)}
+            style={{
+              margin: tokens.BASELINE,
+              backgroundColor: themes.light.colors.white,
+              shadowColor: themes.light.colors.black,
+
+              borderWidth: 1,
+              borderColor: themes.light.colors.carnegieGreen,
+            }}
+          />
+          <Spacer size={16} />
+          <StyledText paddingHorizontal={tokens.BASELINE * 2} fontWeight='bold'>
+            Price of unit
+          </StyledText>
+          <Input
+            placeholder={order?.price?.toString() ?? "Price"}
+            keyboardType='numeric'
+            onChangeText={(text) => setPrice(text)}
+            onBlur={() => setPrice(price)}
+            style={{
+              margin: tokens.BASELINE,
+              backgroundColor: themes.light.colors.white,
+              shadowColor: themes.light.colors.black,
+
+              borderWidth: 1,
+              borderColor: themes.light.colors.carnegieGreen,
+            }}
+          />
+          <StyledText
+            paddingHorizontal={tokens.BASELINE * 2}
+            fontSize={tokens.FONT_SIZE.XSMALL}
+          >
+            Price in SEK
+          </StyledText>
+
+          {editMode && (
+            <>
               <TextSwitch
                 value={action === "sell"}
                 onValueChange={() =>
@@ -130,45 +116,25 @@ const OrderForm = ({
                 leftText='Buy'
                 rightText='Sell'
               />
-            </Container>
-            <Spacer size={4} />
-          </>
-        )}
-      </Container>
-      <Spacer size={32} />
-      <Container
-        height={150}
-        justifyContent='center'
-        alignItems='center'
-        backgroundColor={themes.light.colors.white}
-        borderRadius={tokens.BASELINE}
-        shadowColor={themes.light.colors.black}
-        shadowOffset={{ width: 0, height: 2 }}
-        shadowOpacity={0.25}
-        shadowRadius={3.84}
-        elevation={5}
-      >
-        <StyledText>Total order value</StyledText>
-        <StyledText
-          fontSize={tokens.FONT_SIZE.XLARGE}
-          fontWeight='bold'
-          color={themes.light.colors.carnegieGreen}
-        >
-          {orderValue} kr
-        </StyledText>
-      </Container>
-      <Spacer size={32} />
-      <StickyFooter>
-        <Button
-          disabled={!amount && !price}
-          fontWeight='bold'
-          variant='success'
-          title={editMode ? "Update order" : "Create order"}
-          onPress={handleOrder}
-          size='large'
-        />
-      </StickyFooter>
-    </ScrollView>
+              <Spacer size={4} />
+            </>
+          )}
+        </Container>
+        <Spacer size={32} />
+        <OrderValue orderValue={orderValue} />
+        <Spacer size={32} />
+        <StickyFooter>
+          <Button
+            disabled={editMode ? !orderChanged : !(amount && price)}
+            fontWeight='bold'
+            variant='success'
+            title={editMode ? "Update order" : "Create order"}
+            onPress={handleOrder}
+            size='large'
+          />
+        </StickyFooter>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 

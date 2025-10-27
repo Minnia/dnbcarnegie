@@ -6,6 +6,7 @@ import Button from "../common/Button";
 import { themes } from "../../core/themes";
 import tokens from "../../core/tokens";
 import { Container, Spacer, StyledText } from "../common/styled";
+import OrderValue from "../TotalOrderSumCard/TotalOrderSumCard";
 
 const Order = ({
   order,
@@ -23,37 +24,17 @@ const Order = ({
     ]);
   };
 
+  const orderValue = order.price * order.amount;
+
   return (
     <View style={{ gap: 24, marginTop: tokens.BASELINE * 3 }}>
-      <Container
-        height={150}
-        justifyContent='center'
-        alignItems='center'
-        backgroundColor={themes.light.colors.white}
-        borderRadius={tokens.BASELINE}
-        shadowColor={themes.light.colors.black}
-        shadowOffset={{ width: 0, height: 2 }}
-        shadowOpacity={0.25}
-        shadowRadius={3.84}
-        elevation={5}
-      >
-        <StyledText fontSize={tokens.FONT_SIZE.LARGE}>
-          Total order value
-        </StyledText>
-        <Spacer size={tokens.BASELINE} />
-        <StyledText
-          color={themes.light.colors.carnegieGreen}
-          fontSize={tokens.FONT_SIZE.XLARGE}
-          fontWeight='bold'
-        >
-          {(order.price * order.amount).toFixed(2)} kr
-        </StyledText>
-      </Container>
+      <OrderValue orderValue={orderValue} />
       <Container
         flexDirection='row'
         alignItems='center'
         borderRadius={tokens.BASELINE}
         paddingVertical={tokens.BASELINE * 2}
+        paddingHorizontal={tokens.BASELINE * 2}
         backgroundColor={themes.light.colors.white}
         shadowColor={themes.light.colors.black}
         shadowOffset={{ width: 0, height: 2 }}
@@ -64,16 +45,17 @@ const Order = ({
           gap: tokens.BASELINE * 2,
         }}
       >
-        <View style={{ flex: 1, alignItems: "center" }}>
+        {/* TODO: fix so that it's actually 50% width on both, with flex */}
+        <Container width={"50%"}>
           <StyledText>Price per unit</StyledText>
-          <StyledText fontWeight='bold'>{order.price} kr</StyledText>
-        </View>
-        <View style={{ flex: 1 }}>
-          <StyledText>Total</StyledText>
-          <StyledText fontWeight='bold'>
-            {(order.price * order.amount).toFixed(2)} kr
+          <StyledText textAlign='left' fontWeight='bold'>
+            {order.price} kr
           </StyledText>
-        </View>
+        </Container>
+        <Container width={"50%"}>
+          <StyledText>Total</StyledText>
+          <StyledText fontWeight='bold'>{orderValue.toFixed(2)} kr</StyledText>
+        </Container>
       </Container>
       <Container
         borderRadius={tokens.BASELINE}
@@ -81,6 +63,7 @@ const Order = ({
         justifyContent='center'
         alignItems='center'
         paddingVertical={tokens.BASELINE * 2}
+        paddingHorizontal={tokens.BASELINE * 2}
         backgroundColor={themes.light.colors.white}
         shadowColor={themes.light.colors.black}
         shadowOffset={{ width: 0, height: 2 }}
@@ -91,12 +74,12 @@ const Order = ({
           gap: tokens.BASELINE * 2,
         }}
       >
-        <View style={{ flex: 1, alignItems: "center" }}>
+        <Container width={"50%"}>
           <StyledText>Created</StyledText>
           <StyledText fontWeight='bold'>
             {formattedDate(new Date(order.createdAt))}
           </StyledText>
-        </View>
+        </Container>
         <View style={{ flex: 1 }}>
           <StyledText>Updated at</StyledText>
           <StyledText fontWeight='bold'>

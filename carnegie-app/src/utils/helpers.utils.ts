@@ -8,14 +8,17 @@ export const findMatchingInstrument = (
   order: Order,
   instruments: Instrument[]
 ) => {
-  const matching = instruments?.find(
-    (instrument) => order.instrumentId === instrument.id
-  );
+  const matching =
+    instruments.find((instrument) => order.instrumentId === instrument.id) ||
+    ({} as Instrument);
 
   return matching;
 };
 
-export const fuzzySearch = (query: string, items: any[]): any[] => {
+export const fuzzySearch = <T extends object>(
+  query: string,
+  items: T[]
+): T[] => {
   if (!query) return items;
 
   const lowercaseQuery = query.toLowerCase();
@@ -30,7 +33,7 @@ export const fuzzySearch = (query: string, items: any[]): any[] => {
 };
 
 export const formattedDate = (date: Date) => {
-  return new Intl.DateTimeFormat("sv-SE", {
+  return new Intl.DateTimeFormat("en-US", {
     day: "numeric",
     month: "short",
     hour: "2-digit",
