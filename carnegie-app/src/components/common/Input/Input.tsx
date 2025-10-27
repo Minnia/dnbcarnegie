@@ -31,6 +31,7 @@ const Input = ({
       style={style}
     >
       <TextInput
+        style={{ flex: 1 }}
         onChangeText={(text) => onChangeText(text)}
         placeholder={placeholder}
         keyboardType={keyboardType}
