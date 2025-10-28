@@ -2,9 +2,10 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { TouchableOpacity } from "react-native";
 import tokens from "../../../../constants/tokens";
 import { StyledText } from "../../styled";
+import { ParamListBase } from "@react-navigation/native";
 
 type HeaderLeftProps = {
-  navigation: StackNavigationProp<Record<string, undefined>>;
+  navigation: StackNavigationProp<ParamListBase>;
 };
 
 const HeaderLeft = ({ navigation }: HeaderLeftProps) => {
