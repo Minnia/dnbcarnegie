@@ -45,7 +45,6 @@ const Order = ({
           gap: tokens.BASELINE * 2,
         }}
       >
-        {/* TODO: fix so that it's actually 50% width on both, with flex */}
         <Container width={"50%"}>
           <StyledText>Price per unit</StyledText>
           <StyledText textAlign='left' fontWeight='bold'>
