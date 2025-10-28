@@ -20,9 +20,10 @@ A React Native mobile banking application that allows a user to
 1. In the `backend` directory, run `npm install` in order to install all packages needed to run the backend locally
 2. In the `carnegie-app` directory, run `npm install` in order to install all packages that are needed
 (2.5. If you need to prebuild, unless npm in the `carnegie-app` directory took care of it) Run `npx expo prebuild` to generate the `android/` and `ios/` folders
-3. To run the frontend locally on an iOS emulator, run `npm run ios`. This will run the app on the latest emulator you have worked with
-4. To run the frontend locally on an Android simulator, run `npm run android`
-5. To run unit tests, run `npm run jest` to run all unit tests
+3. Create a `.env` and add the valued sent through email
+4. To run the frontend locally on an iOS emulator, run `npm run ios`. This will run the app on the latest emulator you have worked with
+5. To run the frontend locally on an Android simulator, run `npm run android`
+6. To run unit tests, run `npm run jest` to run all unit tests
 
 ```
 
