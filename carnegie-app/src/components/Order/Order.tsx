@@ -6,14 +6,14 @@ import { themes } from "../../constants/themes";
 import tokens from "../../constants/tokens";
 import { Container, Spacer, StyledText } from "../common/styled";
 import OrderValue from "../TotalOrderSumCard/TotalOrderSumCard";
-import { Order } from "../../api/types";
+import { Order as OrderType } from "../../api/types";
 
 const Order = ({
   order,
   onPress,
   onDelete,
 }: {
-  order: Order;
+  order: OrderType;
   onPress: () => void;
   onDelete: () => void;
 }) => {
