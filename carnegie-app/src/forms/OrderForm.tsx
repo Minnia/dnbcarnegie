@@ -1,23 +1,24 @@
-import { Instrument, Order } from "../api/types";
 import useOrderForm from "./useOrderForm";
 import { StyledText, Container, Spacer } from "../components/common/styled";
-import tokens from "../core/tokens";
+import tokens from "../constants/tokens";
 import TextSwitch from "../components/common/Switch/Switch";
 import Button from "../components/common/Button";
-import { themes } from "../core/themes";
+import { themes } from "../constants/themes";
 import Input from "../components/common/Input";
 import { ScrollView } from "react-native-gesture-handler";
 import StickyFooter from "../components/common/StickyFooter";
 import OrderValue from "../components/TotalOrderSumCard/TotalOrderSumCard";
 import InstrumentCard from "../components/InstrumentCard";
 import { Dimensions, KeyboardAvoidingView, Platform } from "react-native";
+import { InstrumentDTO } from "../api/dtos/instrument.dto";
+import { Order } from "../api/types";
 
 const OrderForm = ({
   order,
   instrument,
 }: {
   order?: Order;
-  instrument: Instrument;
+  instrument: InstrumentDTO;
 }) => {
   const {
     amount,
@@ -30,6 +31,8 @@ const OrderForm = ({
     setAction,
     orderChanged,
   } = useOrderForm(order || ({} as Order), instrument.id);
+
+  // TODO: move
 
   const orderValue = Number(price) * Number(amount);
 

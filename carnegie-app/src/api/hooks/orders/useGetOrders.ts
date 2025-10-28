@@ -8,13 +8,9 @@ const useGetOrders = () => {
   return useQuery({
     queryKey,
     queryFn: async () => {
-      try {
-        const response = await ordersEndpoints.getAllOrders();
-        queryClient.setQueryData(queryKey, response);
-        return response;
-      } catch (error) {
-        throw error;
-      }
+      const response = await ordersEndpoints.getAllOrders();
+      queryClient.setQueryData(queryKey, response);
+      return response;
     },
   });
 };

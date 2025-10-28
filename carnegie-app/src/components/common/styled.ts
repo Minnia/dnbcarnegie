@@ -1,6 +1,6 @@
 import styled from "@emotion/native";
-import tokens from "../../core/tokens";
-import { themes } from "../../core/themes";
+import tokens from "../../constants/tokens";
+import { themes } from "../../constants/themes";
 import { DimensionValue, FlexAlignType, TextStyle } from "react-native";
 
 export const StyledText = styled.Text<{

@@ -1,10 +1,10 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { themes } from "../../../core/themes";
-import tokens from "../../../core/tokens";
+import { themes } from "../../../constants/themes";
+import tokens from "../../../constants/tokens";
 import { Container, StyledText } from "../styled";
 import { TouchableOpacity } from "react-native";
-import { Instrument } from "../../../api/types";
 import { truncateText } from "../../../utils/helpers.utils";
+import { InstrumentDTO } from "../../../api/dtos/instrument.dto";
 
 const Item = ({
   item,
@@ -12,7 +12,7 @@ const Item = ({
   leftIcon,
   onPress,
 }: {
-  item: Instrument;
+  item: InstrumentDTO;
   rightIcon?: keyof typeof Ionicons.glyphMap;
   leftIcon?: keyof typeof Ionicons.glyphMap;
   onPress: () => void;

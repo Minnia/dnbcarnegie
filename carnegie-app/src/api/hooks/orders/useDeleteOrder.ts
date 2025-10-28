@@ -1,22 +1,16 @@
 import { useMutation } from "@tanstack/react-query";
-import { Order } from "../../types";
 import ordersEndpoints from "../../orders.endpoints";
 import { queryClient } from "../../../integrations";
+import { OrderDTO } from "../../dtos/order.dto";
 
-const useDeleteOrder = (id: Order["id"]) => {
+const useDeleteOrder = (id: OrderDTO["id"]) => {
   const queryKey = ["orders", "delete", id];
   const mutation = useMutation({
     mutationKey: queryKey,
     mutationFn: async () => {
-      try {
-        await ordersEndpoints.deleteOrder(id);
-      } catch (error) {
-        console.error("Error deleting order:", error);
-        throw error;
-      }
+      return ordersEndpoints.deleteOrder(id);
     },
     onError: (error) => {
-      console.log("Error deleting order:", error);
       queryClient.invalidateQueries({ queryKey: ["orders"] });
     },
     onSuccess: () => {

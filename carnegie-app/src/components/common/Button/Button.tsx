@@ -1,6 +1,6 @@
 import { TouchableOpacity } from "react-native";
 import { StyledText } from "../styled";
-import { themes } from "../../../core/themes";
+import { themes } from "../../../constants/themes";
 import * as S from "./styled";
 import { Variant } from "../types";
 

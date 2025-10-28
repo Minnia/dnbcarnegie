@@ -1,19 +1,19 @@
 import { Alert, View } from "react-native";
-import { Order as OrderType } from "../../api/types";
 import { formattedDate } from "../../utils/helpers.utils";
 import StickyFooter from "../common/StickyFooter";
 import Button from "../common/Button";
-import { themes } from "../../core/themes";
-import tokens from "../../core/tokens";
+import { themes } from "../../constants/themes";
+import tokens from "../../constants/tokens";
 import { Container, Spacer, StyledText } from "../common/styled";
 import OrderValue from "../TotalOrderSumCard/TotalOrderSumCard";
+import { Order } from "../../api/types";
 
 const Order = ({
   order,
   onPress,
   onDelete,
 }: {
-  order: OrderType;
+  order: Order;
   onPress: () => void;
   onDelete: () => void;
 }) => {
@@ -27,7 +27,7 @@ const Order = ({
   const orderValue = order.price * order.amount;
 
   return (
-    <View style={{ gap: 24, marginTop: tokens.BASELINE * 3 }}>
+    <View style={{ gap: tokens.BASELINE * 3, marginTop: tokens.BASELINE * 3 }}>
       <OrderValue orderValue={orderValue} />
       <Container
         flexDirection='row'

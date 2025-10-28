@@ -10,12 +10,6 @@ const brandColors = {
   carnegieRed: "#C1272D",
 };
 
-const background = {
-  primaryGrey: "#EFEFE9",
-  secondaryGrey: "#F5F5F5",
-  tertiaryGrey: "#CCCCCC",
-};
-
 const systemColors = {
   error: "#D62215",
   danger: "#b1622aff",
@@ -28,9 +22,6 @@ const textColors = {
 };
 
 const brandPalette = {
-  // Backgrounds
-  background: background.primaryGrey,
-
   // Brand
   carnegieGreen: brandColors.carnegieGreen,
   buyGreen: brandColors.buyGreen,
@@ -57,7 +48,6 @@ type ThemeConfig = {
     buyGreen: string;
     sellRed: string;
     carnegieRed: string;
-    background: string;
     error: string;
     danger: string;
     success: string;

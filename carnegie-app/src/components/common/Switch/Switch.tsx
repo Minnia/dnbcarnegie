@@ -1,8 +1,8 @@
 import { TouchableOpacity, Animated } from "react-native";
 import { useEffect, useRef } from "react";
-import { themes } from "../../../core/themes";
+import { themes } from "../../../constants/themes";
 import { Container, StyledText } from "../styled";
-import tokens from "../../../core/tokens";
+import tokens from "../../../constants/tokens";
 
 interface TextSwitchProps {
   value: boolean;

@@ -1,63 +1,14 @@
-import { Suspense, useMemo } from "react";
-
-import {
-  Dimensions,
-  SectionList,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import tokens from "../../core/tokens";
+import { Suspense } from "react";
+import { SectionList, Text, TouchableOpacity, View } from "react-native";
+import tokens from "../../constants/tokens";
 import Title from "../../components/Title";
 import OrderItem from "../../components/OrderListItem";
-import useGetOrders from "../../api/hooks/orders/useGetOrders";
-import { useNavigation } from "@react-navigation/native";
-import { Order } from "../../api/types";
-import { OrderScreenNavigationProp } from "../navigation.types";
 import { Screens } from "../screen.types";
 import { Spacer } from "../../components/common/styled";
+import useOrdersScreen from "./hooks/useOrdersScreen";
 
 const OrdersScreen = () => {
-  const { data: orders } = useGetOrders();
-  const { navigate } = useNavigation<OrderScreenNavigationProp>();
-
-  const sections = useMemo(() => {
-    if (!orders) return [];
-
-    const grouped = orders.reduce(
-      (
-        acc: { title: string; data: Order[]; sortDate: Date }[],
-        order: Order
-      ) => {
-        const monthYear = new Date(order.updatedAt).toLocaleDateString(
-          "en-US",
-          {
-            year: "numeric",
-            month: "long",
-          }
-        );
-
-        const existing = acc.find((section) => section.title === monthYear);
-        if (existing) {
-          existing.data.push(order);
-        } else {
-          acc.push({
-            title: monthYear,
-            data: [order],
-            sortDate: new Date(order.updatedAt),
-          });
-        }
-        return acc;
-      },
-      []
-    );
-    return grouped.sort(
-      (
-        a: { title: string; data: Order[]; sortDate: Date },
-        b: { title: string; data: Order[]; sortDate: Date }
-      ) => b.sortDate.getTime() - a.sortDate.getTime()
-    );
-  }, [orders]);
+  const { navigate, sections } = useOrdersScreen();
   return (
     <Suspense
       fallback={

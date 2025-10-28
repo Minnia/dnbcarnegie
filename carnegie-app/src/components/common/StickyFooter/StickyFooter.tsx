@@ -1,7 +1,7 @@
 import { View, ViewStyle } from "react-native";
 import { ReactNode } from "react";
 import { Container } from "../styled";
-import { themes } from "../../../core/themes";
+import { themes } from "../../../constants/themes";
 
 interface StickyFooterProps {
   children: ReactNode;

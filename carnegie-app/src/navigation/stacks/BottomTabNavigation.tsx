@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { OrderStack } from "./OrderStack";
 import { InstrumentsStack } from "./InstrumentsStack";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { themes } from "../../core/themes";
+import { themes } from "../../constants/themes";
 import { Screens } from "../screen.types";
 
 export const BottomTabNavigation = () => {
@@ -32,7 +32,7 @@ export const BottomTabNavigation = () => {
     >
       <Screen
         name={Screens.ORDERS_LIST}
-        options={{ headerShown: false }}
+        options={{ headerShown: true }}
         component={OrderStack}
       />
       <Screen

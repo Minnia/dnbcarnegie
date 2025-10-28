@@ -1,9 +1,11 @@
 import { useState } from "react";
 import useCreateOrder from "../api/hooks/orders/useCreateOrder";
 import useEditOrder from "../api/hooks/orders/useEditOrder";
-import { Action, Instrument, Order } from "../api/types";
+
 import { useNavigation } from "@react-navigation/native";
 import { Alert } from "react-native";
+import { Action } from "../api/dtos/common.dto";
+import { Instrument, Order } from "../api/types";
 
 const useOrderForm = (order: Order, instrumentId: Instrument["id"]) => {
   const editMode = !!order.id;
@@ -18,9 +20,9 @@ const useOrderForm = (order: Order, instrumentId: Instrument["id"]) => {
   const [price, setPrice] = useState<string>(order?.price?.toString() || "");
   const [action, setAction] = useState<Action>(order?.action || "buy");
 
-  const priceChange = price !== order.price.toString();
-  const amountChange = amount !== order.amount.toString();
-  const actionChange = action !== order.action;
+  const priceChange = price !== (order?.price?.toString() ?? "");
+  const amountChange = amount !== (order?.amount?.toString() ?? "");
+  const actionChange = action !== order?.action;
 
   const orderChanged = priceChange || amountChange || actionChange;
 

@@ -1,11 +1,11 @@
 import { View } from "react-native";
-import { Order } from "../../api/types";
 import { findMatchingInstrument } from "../../utils/helpers.utils";
 import useGetInstruments from "../../api/hooks/instruments/useGetInstruments";
 import * as S from "./styled";
-import { themes } from "../../core/themes";
+import { themes } from "../../constants/themes";
 import { Container, StyledText } from "../common/styled";
-import tokens from "../../core/tokens";
+import tokens from "../../constants/tokens";
+import { Order } from "../../api/types";
 
 const OrderListItem = ({ order }: { order: Order }) => {
   const { data: instruments, isLoading } = useGetInstruments();
@@ -30,10 +30,6 @@ const OrderListItem = ({ order }: { order: Order }) => {
         width={"100%"}
         shadowRadius={3.84}
         elevation={5}
-        style={{
-          borderBottomWidth: 1,
-          borderBottomColor: themes.light.colors.background,
-        }}
       >
         <View>
           <StyledText fontSize={tokens.FONT_SIZE.XSMALL}>

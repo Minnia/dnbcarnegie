@@ -1,5 +1,5 @@
-import { themes } from "../../core/themes";
-import tokens from "../../core/tokens";
+import { themes } from "../../constants/themes";
+import tokens from "../../constants/tokens";
 import { Container, Spacer, StyledText } from "../common/styled";
 
 const TotalOrderSumCard = ({ orderValue }: { orderValue: number }) => {

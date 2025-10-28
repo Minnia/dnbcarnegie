@@ -1,9 +1,9 @@
 import styled from "@emotion/native";
-import { themes } from "../../../core/themes";
-import tokens from "../../../core/tokens";
+import { themes } from "../../../constants/themes";
+import tokens from "../../../constants/tokens";
 import { Variant } from "../types";
 
-const getVariantStyle = (variant: Variant, disabled?: boolean) => {
+const getVariantStyle = (variant: Variant) => {
   switch (variant) {
     case "primary":
       return {
@@ -25,7 +25,7 @@ const getVariantStyle = (variant: Variant, disabled?: boolean) => {
       };
     default:
       return {
-        backgroundColor: themes.light.colors.background,
+        backgroundColor: themes.light.colors.carnegieGreen,
       };
   }
 };
@@ -38,8 +38,7 @@ export const ButtonContainer = styled.View<{
   padding-vertical: ${tokens.BASELINE * 1.5 + "px"};
   padding-horizontal: ${tokens.BASELINE * 3 + "px"};
   border-radius: ${tokens.BASELINE + "px"};
-  background-color: ${({ variant, disabled }) =>
-    getVariantStyle(variant, disabled)};
+  background-color: ${({ variant }) => getVariantStyle(variant)};
   opacity: ${({ disabled }) => (disabled ? "0.5" : "1")};
   ${({ size }) =>
     size === "small"

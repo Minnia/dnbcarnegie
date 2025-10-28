@@ -38,6 +38,7 @@ export const formattedDate = (date: Date) => {
     month: "short",
     hour: "2-digit",
     minute: "2-digit",
+    timeZone: "UTC",
   }).format(date);
 };
 

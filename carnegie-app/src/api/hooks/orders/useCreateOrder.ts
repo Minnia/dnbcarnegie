@@ -1,17 +1,13 @@
 import { useMutation } from "@tanstack/react-query";
-import { OrderRequest } from "../../types";
 import ordersEndpoints from "../../orders.endpoints";
 import { queryClient } from "../../../integrations";
+import { CreateOrderDTO } from "../../dtos/order.dto";
 
 const useCreateOrder = () => {
   const mutation = useMutation({
-    mutationFn: async (order: OrderRequest) => {
-      try {
-        const response = await ordersEndpoints.addOrder(order);
-        return response;
-      } catch (error) {
-        throw error;
-      }
+    mutationFn: async (order: CreateOrderDTO) => {
+      const response = await ordersEndpoints.addOrder(order);
+      return response;
     },
     onError: (error) => {
       queryClient.invalidateQueries({ queryKey: ["orders"] });

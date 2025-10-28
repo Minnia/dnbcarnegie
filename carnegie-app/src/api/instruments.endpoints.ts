@@ -1,10 +1,12 @@
 import apiClient from "./apiClient";
-import { Instrument, InstrumentsResponse } from "./types";
+import { InstrumentDTO, InstrumentsResponseDTO } from "./dtos/instrument.dto";
 
 const instrumentsEndpoints = {
-  getAllInstruments: async (): Promise<Instrument[]> => {
+  getAllInstruments: async (): Promise<InstrumentDTO[]> => {
     try {
-      const { data } = await apiClient.get<InstrumentsResponse>("/instruments");
+      const { data } = await apiClient.get<InstrumentsResponseDTO>(
+        "/instruments"
+      );
       return data.items;
     } catch (error) {
       throw new Error("Failed to fetch instruments");

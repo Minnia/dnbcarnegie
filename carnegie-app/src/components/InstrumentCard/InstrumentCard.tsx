@@ -1,10 +1,16 @@
 import { Dimensions, View } from "react-native";
-import { themes } from "../../core/themes";
-import tokens from "../../core/tokens";
+import { themes } from "../../constants/themes";
+import tokens from "../../constants/tokens";
 import { Container, StyledText } from "../common/styled";
-import { Instrument } from "../../api/types";
+import { Instrument, Order } from "../../api/types";
 
-const InstrumentCard = ({ instrument }: { instrument: Instrument }) => {
+const InstrumentCard = ({
+  instrument,
+  orderAction,
+}: {
+  instrument: Instrument;
+  orderAction?: Order["action"];
+}) => {
   return (
     <Container
       height={Dimensions.get("window").height * 0.1}
@@ -25,6 +31,26 @@ const InstrumentCard = ({ instrument }: { instrument: Instrument }) => {
           {instrument?.name}
         </StyledText>
         <StyledText textAlign='center'>{instrument?.ticker}</StyledText>
+        {orderAction && (
+          <StyledText
+            style={{
+              backgroundColor:
+                orderAction === "buy"
+                  ? themes.light.colors.carnegieGreen
+                  : themes.light.colors.carnegieRed,
+              paddingHorizontal: tokens.BASELINE,
+              paddingVertical: tokens.BASELINE / 2,
+              borderRadius: tokens.BASELINE / 2,
+              alignSelf: "center",
+              marginTop: tokens.BASELINE / 2,
+            }}
+            textAlign='center'
+            fontWeight='bold'
+            color={themes.light.colors.white}
+          >
+            {orderAction.toUpperCase()}
+          </StyledText>
+        )}
       </View>
     </Container>
   );

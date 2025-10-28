@@ -6,35 +6,6 @@ A React Native mobile banking application that allows a user to
 - Manage (edit and remove)
 - Create stock orders for available financial instruments.
 
-## Features
-
-### 📊 Order list
-
-- View active stock orders
-
-### Order
-
-- View selected order
-- Information regarding total order value
-
-### 📊 Order management
-
-- Edit existing orders (amount, price, buy/sell action)
-- Delete orders with confirmation
-
-### 💹 Buying instrument(s)
-
-- Search for available instruments
-- Create an order based on the instrument you want to buy
-
-### 🎯 Key Capabilities
-
-- **Numeric Input Validation**: Ensures accurate amount and price entry
-- **Order Editing**: Modify existing orders before execution
-- **Buy/Sell Toggle**: Easy switching between buy and sell orders
-- **Order Value Preview**: Live calculation of total order value (price × amount)
-- **Responsive UI**: Smooth keyboard handling and scrolling
-
 ## Tech Stack
 
 - **Framework**: React Native
@@ -47,6 +18,31 @@ A React Native mobile banking application that allows a user to
 
 ### Prerequisites
 
-```
+```bash
+1. In the `backend` directory, run `npm install` in order to install all packages needed to run the backend locally
+2. In the `carnegie-app` directory, run `npm install` in order to install all packages that are needed
+3. To run the frontend locally on an iOS emulator, run `npm run ios`. This will run the app on the latest emulator you have worked with
+4. To run the frontend locally on an Android simulator, run `npm run android`
+5. To run unit tests, run `npm run jest` to run all unit tests
 
 ```
+
+#### What kind of testing?
+
+### Unit tests
+
+We're covering the helper functions with unit tests using jest. The helper functions are general functions that can be used throughout the app, for instance to truncate text or format dates
+
+### UI test
+
+We're covering part of the UI by testing the rendering of the components. For now, we've covered the initial screen where the orders are rendered (the `OrdersScreen`), and the idea is that you can keep building on top of this
+
+### Navigating through the app
+
+1. See all your orders on the initial screen
+2. To see a specific order, press the order you're interested in to get more information
+3. To edit an order, press the "edit" button inside an order
+4. To delete an order, press the "delete" button inside an order
+5. To create an order, go to "Create order", search for the instrument you want, press it to buy and fill in the order form to create your order
+
+## Pictures and videos of the app's functionality

@@ -1,8 +1,8 @@
 import { Dimensions, TextInput, ViewStyle } from "react-native";
 import { Container } from "../styled";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { themes } from "../../../core/themes";
-import tokens from "../../../core/tokens";
+import { themes } from "../../../constants/themes";
+import tokens from "../../../constants/tokens";
 
 const Input = ({
   onChangeText,

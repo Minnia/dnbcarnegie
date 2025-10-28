@@ -1,6 +1,6 @@
 import { StackNavigationProp } from "@react-navigation/stack";
-import { Instrument, Order } from "../api/types";
 import { Screens } from "./screen.types";
+import { Instrument, Order } from "../api/types";
 
 export type OrderScreenParamList = {
   [Screens.ORDER_DETAILS]: {
@@ -8,7 +8,7 @@ export type OrderScreenParamList = {
   };
 };
 
-export type OrderStackParamList = {
+export type InstrumentsParamList = {
   [Screens.INSTRUMENTS]: {
     instrument: Instrument;
     order: Order;
@@ -26,8 +26,8 @@ export type CreateOrderStackParamList = {
   };
 };
 
-export type OrderManagementStackNavigationProp =
-  StackNavigationProp<OrderStackParamList>;
+export type InstrumentsNavigationProp =
+  StackNavigationProp<InstrumentsParamList>;
 
 export type OrderScreenNavigationProp =
   StackNavigationProp<OrderScreenParamList>;

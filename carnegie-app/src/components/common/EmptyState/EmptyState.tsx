@@ -1,5 +1,5 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
-import tokens from "../../../core/tokens";
+import tokens from "../../../constants/tokens";
 import { Container, Spacer, StyledText } from "../styled";
 import { IconProps } from "@expo/vector-icons/build/createIconSet";
 import Button from "../Button";

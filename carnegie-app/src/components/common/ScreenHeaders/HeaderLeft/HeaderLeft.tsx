@@ -1,6 +1,6 @@
 import { StackNavigationProp } from "@react-navigation/stack";
 import { Text, TouchableOpacity } from "react-native";
-import tokens from "../../../../core/tokens";
+import tokens from "../../../../constants/tokens";
 import { StyledText } from "../../styled";
 
 const HeaderLeft = ({

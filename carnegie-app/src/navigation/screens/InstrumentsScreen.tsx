@@ -1,18 +1,18 @@
 import { FlatList } from "react-native-gesture-handler";
 import useGetInstruments from "../../api/hooks/instruments/useGetInstruments";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { fuzzySearch } from "../../utils/helpers.utils";
 import { useNavigation } from "@react-navigation/native";
 import { Container, Spacer } from "../../components/common/styled";
 import Item from "../../components/common/Item";
-import tokens from "../../core/tokens";
+import tokens from "../../constants/tokens";
 import Input from "../../components/common/Input";
 import EmptyState from "../../components/common/EmptyState";
-import { themes } from "../../core/themes";
-import { Instrument } from "../../api/types";
+import { themes } from "../../constants/themes";
 import { InstrumentStackParamList } from "../navigation.types";
 import { Screens } from "../screen.types";
-import { Dimensions } from "react-native";
+import { Dimensions, Text } from "react-native";
+import { Instrument } from "../../api/types";
 
 const InstrumentsScreen = () => {
   const { data: instruments } = useGetInstruments();
@@ -32,11 +32,8 @@ const InstrumentsScreen = () => {
   };
 
   return (
-    <>
-      <Container
-        backgroundColor={themes.light.colors.white}
-        style={{ borderWidth: 1, borderColor: themes.light.colors.background }}
-      >
+    <Suspense fallback={<Text>Loading...</Text>}>
+      <Container backgroundColor={themes.light.colors.white}>
         <Input
           placeholder='Search for instruments'
           iconName={searchParam ? "close-outline" : "search-outline"}
@@ -104,7 +101,7 @@ const InstrumentsScreen = () => {
           />
         )}
       </Container>
-    </>
+    </Suspense>
   );
 };
 

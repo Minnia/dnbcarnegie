@@ -9,7 +9,8 @@
     "ios:14": "expo run:ios --device 'iPhone 14 Pro'",
     "ios:13": "expo run:ios --device 'iPhone 13 mini'",
     "android:small": "expo run:android --device 'Pixel_3a_API_30_x86'",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "test": "jest"
   },
   "dependencies": {
     "@emotion/native": "^11.11.0",
@@ -33,7 +34,11 @@
     "react-navigation-stack": "^2.10.4"
   },
   "devDependencies": {
+    "@testing-library/react-native": "^13.3.3",
+    "@types/jest": "^30.0.0",
     "@types/react": "~19.1.0",
+    "jest": "^29.7.0",
+    "jest-expo": "^54.0.13",
     "typescript": "~5.9.2"
   },
   "private": true
