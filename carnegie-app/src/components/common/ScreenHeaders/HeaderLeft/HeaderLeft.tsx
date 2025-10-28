@@ -1,13 +1,13 @@
 import { StackNavigationProp } from "@react-navigation/stack";
-import { Text, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import tokens from "../../../../constants/tokens";
 import { StyledText } from "../../styled";
 
-const HeaderLeft = ({
-  navigation,
-}: {
-  navigation: StackNavigationProp<any>;
-}) => {
+type HeaderLeftProps = {
+  navigation: StackNavigationProp<Record<string, undefined>>;
+};
+
+const HeaderLeft = ({ navigation }: HeaderLeftProps) => {
   return (
     <TouchableOpacity onPress={() => navigation.goBack()}>
       <StyledText
