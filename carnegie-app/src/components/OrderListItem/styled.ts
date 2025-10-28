@@ -21,5 +21,5 @@ ${({ position }) =>
     : `
   align-items: flex-end;
 `}
-${({ gap }) => gap && `gap: ${gap};`}
+${({ gap }) => gap && `gap: ${gap}px;`}
     `;
