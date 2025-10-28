@@ -30,11 +30,8 @@ const OrderForm = ({
     action,
     setAction,
     orderChanged,
+    orderValue,
   } = useOrderForm(order || ({} as Order), instrument.id);
-
-  // TODO: move
-
-  const orderValue = Number(price) * Number(amount);
 
   return (
     <KeyboardAvoidingView

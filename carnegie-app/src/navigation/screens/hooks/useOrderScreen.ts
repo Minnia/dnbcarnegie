@@ -1,5 +1,4 @@
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import useGetOrders from "../../../api/hooks/orders/useGetOrders";
 import {
   InstrumentsNavigationProp,
   OrderScreenParamList,
@@ -8,13 +7,15 @@ import useDeleteOrder from "../../../api/hooks/orders/useDeleteOrder";
 import { Alert } from "react-native";
 import useGetInstruments from "../../../api/hooks/instruments/useGetInstruments";
 import { findMatchingInstrument } from "../../../utils/helpers.utils";
+import useOrder from "../../../api/hooks/orders/useOrder";
 
 const useOrderScreen = () => {
   const {
-    params: { order },
+    params: { orderId },
   } = useRoute<RouteProp<OrderScreenParamList>>();
   const { navigate, goBack } = useNavigation<InstrumentsNavigationProp>();
-  const { mutateAsync: deleteOrder } = useDeleteOrder(order.id);
+  const { mutateAsync: deleteOrder } = useDeleteOrder(orderId);
+  const order = useOrder(orderId);
 
   const handleDelete = async () => {
     try {
@@ -26,14 +27,11 @@ const useOrderScreen = () => {
   };
 
   const { data: instruments } = useGetInstruments();
-  const instrument = findMatchingInstrument(order, instruments || []);
-  const { data: orders } = useGetOrders();
-
-  const cachedOrder = orders?.find((o) => o.id === order.id) || order;
+  const instrument = findMatchingInstrument(order!, instruments || []);
 
   return {
     instrument,
-    cachedOrder,
+    order,
     handleDelete,
     navigate,
   };

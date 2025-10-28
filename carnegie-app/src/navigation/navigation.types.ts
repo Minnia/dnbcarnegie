@@ -4,7 +4,7 @@ import { Instrument, Order } from "../api/types";
 
 export type OrderScreenParamList = {
   [Screens.ORDER_DETAILS]: {
-    order: Order;
+    orderId: Order["id"];
   };
 };
 

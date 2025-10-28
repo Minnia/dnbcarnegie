@@ -12,6 +12,7 @@ const Input = ({
   onClear,
   iconName,
   style,
+  inputRef,
 }: {
   onChangeText: (text: string) => void;
   onBlur?: () => void;
@@ -20,6 +21,7 @@ const Input = ({
   keyboardType?: "default" | "numeric";
   iconName?: keyof typeof Ionicons.glyphMap;
   style?: ViewStyle;
+  inputRef?: React.RefObject<TextInput | null>;
 }) => {
   return (
     <Container
@@ -31,6 +33,7 @@ const Input = ({
       style={style}
     >
       <TextInput
+        ref={inputRef}
         style={{ flex: 1 }}
         onChangeText={(text) => onChangeText(text)}
         placeholder={placeholder}

@@ -32,7 +32,7 @@ export const BottomTabNavigation = () => {
     >
       <Screen
         name={Screens.ORDERS_LIST}
-        options={{ headerShown: true }}
+        options={{ headerShown: false }}
         component={OrderStack}
       />
       <Screen

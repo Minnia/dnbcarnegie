@@ -7,11 +7,12 @@ const useDeleteOrder = (id: OrderDTO["id"]) => {
   const queryKey = ["orders", "delete", id];
   const mutation = useMutation({
     mutationKey: queryKey,
-    mutationFn: async () => {
+    mutationFn: () => {
       return ordersEndpoints.deleteOrder(id);
     },
     onError: (error) => {
       queryClient.invalidateQueries({ queryKey: ["orders"] });
+      throw error;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["orders"] });

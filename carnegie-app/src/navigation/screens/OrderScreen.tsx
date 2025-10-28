@@ -8,7 +8,7 @@ import { Screens } from "../screen.types";
 import useOrderScreen from "./hooks/useOrderScreen";
 
 const OrderScreen = () => {
-  const { cachedOrder, instrument, handleDelete, navigate } = useOrderScreen();
+  const { order, instrument, handleDelete, navigate } = useOrderScreen();
 
   return (
     <Suspense fallback={<Text>Loading...</Text>}>
@@ -17,16 +17,11 @@ const OrderScreen = () => {
           padding: tokens.BASELINE * 2,
         }}
       >
-        <InstrumentCard
-          instrument={instrument!}
-          orderAction={cachedOrder.action}
-        />
+        <InstrumentCard instrument={instrument!} orderAction={order!.action} />
         <Spacer size={1} />
         <Order
-          order={cachedOrder}
-          onPress={() =>
-            navigate(Screens.ORDER_FORM, { order: cachedOrder, instrument })
-          }
+          order={order!}
+          onPress={() => navigate(Screens.ORDER_FORM, { order, instrument })}
           onDelete={handleDelete}
         />
       </ScrollView>

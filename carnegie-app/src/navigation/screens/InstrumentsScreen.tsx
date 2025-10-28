@@ -1,44 +1,40 @@
 import { FlatList } from "react-native-gesture-handler";
-import useGetInstruments from "../../api/hooks/instruments/useGetInstruments";
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 import { fuzzySearch } from "../../utils/helpers.utils";
-import { useNavigation } from "@react-navigation/native";
 import { Container, Spacer } from "../../components/common/styled";
 import Item from "../../components/common/Item";
 import tokens from "../../constants/tokens";
 import Input from "../../components/common/Input";
 import EmptyState from "../../components/common/EmptyState";
 import { themes } from "../../constants/themes";
-import { InstrumentStackParamList } from "../navigation.types";
 import { Screens } from "../screen.types";
-import { Dimensions, Text } from "react-native";
+import { Text } from "react-native";
 import { Instrument } from "../../api/types";
+import useInstrumentsScreen from "./hooks/useInstrumentsScreen";
 
 const InstrumentsScreen = () => {
-  const { data: instruments } = useGetInstruments();
-  const { navigate } = useNavigation<InstrumentStackParamList>();
-
-  const [searchParam, setSearchParam] = useState("");
-
-  const noMatchingInstrument =
-    searchParam &&
-    instruments &&
-    fuzzySearch(searchParam, instruments).length === 0;
-
-  const width = Dimensions.get("window").width - tokens.BASELINE * 4;
-
-  const onChangeSearch = (search: string) => {
-    setSearchParam(search);
-  };
-
+  const {
+    inputRef,
+    onChangeSearch,
+    setSearchParam,
+    searchParam,
+    noMatchingInstrument,
+    width,
+    instruments,
+    navigate,
+  } = useInstrumentsScreen();
   return (
     <Suspense fallback={<Text>Loading...</Text>}>
       <Container backgroundColor={themes.light.colors.white}>
         <Input
+          inputRef={inputRef}
           placeholder='Search for instruments'
           iconName={searchParam ? "close-outline" : "search-outline"}
           onChangeText={onChangeSearch}
-          onClear={() => setSearchParam("")}
+          onClear={() => {
+            setSearchParam("");
+            inputRef.current?.clear();
+          }}
           style={{
             margin: tokens.BASELINE,
             backgroundColor: themes.light.colors.white,

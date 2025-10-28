@@ -8,8 +8,6 @@ import { Action } from "../api/dtos/common.dto";
 import { Instrument, Order } from "../api/types";
 
 const useOrderForm = (order: Order, instrumentId: Instrument["id"]) => {
-  const editMode = !!order.id;
-
   const { mutateAsync: updateOrder, error: updateOrderError } = useEditOrder(
     order.id
   );
@@ -25,6 +23,8 @@ const useOrderForm = (order: Order, instrumentId: Instrument["id"]) => {
   const actionChange = action !== order?.action;
 
   const orderChanged = priceChange || amountChange || actionChange;
+  const editMode = !!order.id;
+  const orderValue = Number(price) * Number(amount);
 
   const handleUpdateOrder = async () => {
     try {
@@ -85,6 +85,7 @@ const useOrderForm = (order: Order, instrumentId: Instrument["id"]) => {
     handleOrder,
     editMode,
     orderChanged,
+    orderValue,
   };
 };
 

@@ -6,7 +6,7 @@ export default {
     slug: "carnegie-app",
     version: "1.0.0",
     orientation: "portrait",
-    icon: "./assets/icon.png",
+    icon: "./assets/app logo.png",
     userInterfaceStyle: "light",
     newArchEnabled: true,
     splash: {

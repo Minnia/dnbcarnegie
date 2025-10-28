@@ -14,9 +14,10 @@ const useEditOrder = (id: number) => {
       queryClient.invalidateQueries({ queryKey: ["orders"] });
       throw error;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["order", id] });
       queryClient.invalidateQueries({ queryKey: ["orders"] });
+      queryClient.setQueryData(["order", id], data);
     },
   });
 
