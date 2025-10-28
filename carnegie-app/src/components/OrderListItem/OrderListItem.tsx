@@ -48,9 +48,7 @@ const OrderListItem = ({ order }: { order: Order }) => {
           </StyledText>
         </View>
         <S.Section position='left' gap={4}>
-          <S.InstrumentName>
-            {isLoading ? "Loading..." : match?.name}
-          </S.InstrumentName>
+          <StyledText>{isLoading ? "Loading..." : match?.name}</StyledText>
           <StyledText color={themes.light.colors.text}>
             {order.amount} stocks
           </StyledText>

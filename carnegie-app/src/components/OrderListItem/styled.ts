@@ -1,11 +1,5 @@
 import styled from "@emotion/native";
 
-export const InstrumentName = styled.Text`
-  font-size: 15px;
-  font-weight: 400;
-  color: #1a1a1a;
-`;
-
 export const Section = styled.View<{
   position: "left" | "center" | "right";
   margin?: number;
