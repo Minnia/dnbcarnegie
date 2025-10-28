@@ -3,13 +3,11 @@
 A React Native mobile banking application that allows a user to
 
 - View,
-- Manage (edit and remove)
-- Create stock orders for available financial instruments.
+- Manage (edit and remove),
+- Create stock orders for available financial instruments
 
 ## Tech Stack
 
-- **Framework**: React Native
-- **Navigation**: React Navigation
 - **State Management**: Tanstack/React Query and local state management (useState, useEffect)
 - **Styling**: Styled Components with the Emotion library
 - **API Integration**: REST API for orders and instruments
@@ -44,5 +42,3 @@ We're covering part of the UI by testing the rendering of the components. For no
 3. To edit an order, press the "edit" button inside an order
 4. To delete an order, press the "delete" button inside an order
 5. To create an order, go to "Create order", search for the instrument you want, press it to buy and fill in the order form to create your order
-
-## Pictures and videos of the app's functionality
