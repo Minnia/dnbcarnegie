@@ -26,6 +26,11 @@ const useInstrumentsScreen = () => {
     setSearchParam(search);
   };
 
+  const onClearSearch = () => {
+    setSearchParam("");
+    inputRef.current?.clear();
+  };
+
   useEffect(() => {
     if (isError && error) {
       Toast.show({
@@ -44,7 +49,7 @@ const useInstrumentsScreen = () => {
     instruments,
     searchParam,
     onChangeSearch,
-    setSearchParam,
+    onClearSearch,
     noMatchingInstrument,
     inputRef,
     width,

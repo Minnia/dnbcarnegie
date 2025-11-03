@@ -16,7 +16,7 @@ const InstrumentsScreen = () => {
   const {
     inputRef,
     onChangeSearch,
-    setSearchParam,
+    onClearSearch,
     searchParam,
     noMatchingInstrument,
     width,
@@ -31,10 +31,7 @@ const InstrumentsScreen = () => {
           placeholder='Search for instruments'
           iconName={searchParam ? "close-outline" : "search-outline"}
           onChangeText={onChangeSearch}
-          onClear={() => {
-            setSearchParam("");
-            inputRef.current?.clear();
-          }}
+          onClear={onClearSearch}
           style={{
             margin: tokens.BASELINE,
             backgroundColor: themes.light.colors.white,
@@ -58,23 +55,17 @@ const InstrumentsScreen = () => {
           />
         )}
         {noMatchingInstrument && (
-          <Container
-            justifyContent='center'
-            alignItems='center'
-            style={{ flex: 1 }}
-          >
-            <EmptyState
-              text='No matching instruments found'
-              subtitle='Try a different search'
-              iconName='sad-outline'
-            />
-          </Container>
+          <EmptyState
+            text='No matching instruments found'
+            subtitle='Try a different search'
+            iconName='sad-outline'
+          />
         )}
         {searchParam && instruments && (
           <FlatList
             data={fuzzySearch(searchParam, instruments)}
             keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }: { item: Instrument }) => (
+            renderItem={({ item }) => (
               <Container
                 key={item.id}
                 flexDirection='column'
