@@ -1,5 +1,11 @@
 import { Suspense } from "react";
-import { SectionList, Text, TouchableOpacity, View } from "react-native";
+import {
+  SectionList,
+  Text,
+  TouchableOpacity,
+  View,
+  RefreshControl,
+} from "react-native";
 import tokens from "../../constants/tokens";
 import Title from "../../components/Title";
 import OrderItem from "../../components/OrderListItem";
@@ -9,7 +15,8 @@ import useOrdersScreen from "./hooks/useOrdersScreen";
 import EmptyState from "../../components/common/EmptyState";
 
 const OrdersScreen = () => {
-  const { navigate, sections, isError, error } = useOrdersScreen();
+  const { navigate, sections, isError, error, isRefetching } =
+    useOrdersScreen();
 
   if (isError && error) {
     return (
@@ -42,6 +49,9 @@ const OrdersScreen = () => {
       }
     >
       <SectionList
+        refreshControl={
+          <RefreshControl refreshing={isRefetching} onRefresh={() => {}} />
+        }
         stickySectionHeadersEnabled={false}
         style={{ margin: tokens.BASELINE }}
         sections={sections}

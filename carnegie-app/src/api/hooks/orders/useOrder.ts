@@ -8,9 +8,11 @@ const useOrder = (orderId: Order["id"]) => {
   }
 
   const order = orders.find((order) => order.id === orderId);
+
   if (!order) {
     return undefined;
   }
+
   return order;
 };
 

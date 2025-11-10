@@ -6,7 +6,7 @@ import { groupOrdersByMonth } from "../../../utils/orders.utils";
 import Toast from "react-native-toast-message";
 
 const useOrdersScreen = () => {
-  const { data: orders, isError, error } = useGetOrders();
+  const { data: orders, isError, error, isRefetching } = useGetOrders();
   const { navigate } = useNavigation<OrderScreenNavigationProp>();
 
   const sections = useMemo(() => groupOrdersByMonth(orders), [orders]);
@@ -27,6 +27,7 @@ const useOrdersScreen = () => {
     sections,
     error,
     isError,
+    isRefetching,
   };
 };
 

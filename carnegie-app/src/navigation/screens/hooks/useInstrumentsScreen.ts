@@ -18,6 +18,11 @@ const useInstrumentsScreen = () => {
     instruments &&
     fuzzySearch(searchParam, instruments).length === 0;
 
+  const hasResults =
+    searchParam &&
+    instruments &&
+    fuzzySearch(searchParam, instruments).length > 0;
+
   const width = Dimensions.get("window").width - tokens.BASELINE * 4;
 
   const inputRef = useRef<TextInput>(null);
@@ -53,6 +58,7 @@ const useInstrumentsScreen = () => {
     noMatchingInstrument,
     inputRef,
     width,
+    hasResults,
   };
 };
 

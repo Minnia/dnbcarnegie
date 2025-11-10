@@ -11,10 +11,14 @@ const InstrumentCard = ({
   instrument: Instrument;
   orderAction?: Order["action"];
 }) => {
+  const backgroundColor =
+    orderAction === "buy"
+      ? themes.light.colors.buyGreen
+      : themes.light.colors.sellRed;
   return (
     <Container
       height={Dimensions.get("window").height * 0.1}
-      backgroundColor={themes.light.colors.buyGreen}
+      backgroundColor={backgroundColor}
       paddingHorizontal={tokens.BASELINE * 2}
       paddingVertical={tokens.BASELINE * 2}
       justifyContent='center'
@@ -33,12 +37,12 @@ const InstrumentCard = ({
         <StyledText textAlign='center'>{instrument?.ticker}</StyledText>
         {orderAction && (
           <StyledText
+            paddingHorizontal={tokens.BASELINE}
             style={{
               backgroundColor:
                 orderAction === "buy"
                   ? themes.light.colors.carnegieGreen
                   : themes.light.colors.carnegieRed,
-              paddingHorizontal: tokens.BASELINE,
               paddingVertical: tokens.BASELINE / 2,
               borderRadius: tokens.BASELINE / 2,
               alignSelf: "center",

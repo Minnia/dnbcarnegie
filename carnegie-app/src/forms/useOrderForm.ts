@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Alert } from "react-native";
 import { Action } from "../api/dtos/common.dto";
 import { Instrument, Order } from "../api/types";
+import Toast from "react-native-toast-message";
 
 const useOrderForm = (order: Order, instrumentId: Instrument["id"]) => {
   const { mutateAsync: updateOrder, error: updateOrderError } = useEditOrder(
@@ -34,6 +35,13 @@ const useOrderForm = (order: Order, instrumentId: Instrument["id"]) => {
         price: parseFloat(price),
         action,
       });
+      Toast.show({
+        type: "success",
+        text1: "Success",
+        topOffset: 60,
+        text2: "Updated order successfully",
+      });
+
       goBack();
     } catch (error) {
       Alert.alert("Error", "Failed to update the order. Please try again.");
@@ -46,6 +54,12 @@ const useOrderForm = (order: Order, instrumentId: Instrument["id"]) => {
       amount: parseFloat(amount),
       price: parseFloat(price),
       action: "buy",
+    });
+    Toast.show({
+      type: "success",
+      text1: "Success",
+      topOffset: 60,
+      text2: "Created order successfully",
     });
     goBack();
   };

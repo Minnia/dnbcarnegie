@@ -9,7 +9,6 @@ import EmptyState from "../../components/common/EmptyState";
 import { themes } from "../../constants/themes";
 import { Screens } from "../screen.types";
 import { Text } from "react-native";
-import { Instrument } from "../../api/types";
 import useInstrumentsScreen from "./hooks/useInstrumentsScreen";
 
 const InstrumentsScreen = () => {
@@ -22,6 +21,7 @@ const InstrumentsScreen = () => {
     width,
     instruments,
     navigate,
+    hasResults,
   } = useInstrumentsScreen();
   return (
     <Suspense fallback={<Text>Loading...</Text>}>
@@ -61,7 +61,7 @@ const InstrumentsScreen = () => {
             iconName='sad-outline'
           />
         )}
-        {searchParam && instruments && (
+        {hasResults && instruments && (
           <FlatList
             data={fuzzySearch(searchParam, instruments)}
             keyExtractor={(item) => item.id.toString()}
