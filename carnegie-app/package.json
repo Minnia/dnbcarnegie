@@ -11,7 +11,7 @@
     "android:small": "expo run:android --device 'Pixel_3a_API_30_x86'",
     "web": "expo start --web",
     "test": "jest",
-    "build": "npx expo export"
+    "build": "tsc --noEmit"
   },
   "dependencies": {
     "@emotion/native": "^11.11.0",
