@@ -1,0 +1,24 @@
+name: Events demo 1
+on:
+  pull_request:
+    types:
+      - opened
+jobs:
+  deploy:
+    runs-on: macos-latest
+    steps:
+    - name: Output event data
+      run: echo "${{ toJSON(github.event) }}"
+    - name: Get code
+      uses: actions/checkout@v3
+    - name: Install dependencies
+      run: npm install
+      working-directory: carnegie-app
+    - name: Test code
+      run: npm run test
+      working-directory: carnegie-app
+    - name: Build code
+      run: npm run build
+      working-directory: carnegie-app
+    - name: Deploy code
+      run: echo "Deploying..."
