@@ -14,3 +14,18 @@ jobs:
       - name: Run unit tests
         run: npm test
         working-directory: carnegie-app
+  deploy:
+    runs-on: macos-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Install NodeJS
+        uses: actions/setup-node@v3
+      - name: Install dependencies
+        run: npm install
+        working-directory: carnegie-app
+      - name: Build project
+        run: npm run build
+        working-directory: carnegie-app
+      - name: Deploy
+        run: echo "Deploying..."
