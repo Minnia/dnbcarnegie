@@ -10,7 +10,8 @@
     "ios:13": "expo run:ios --device 'iPhone 13 mini'",
     "android:small": "expo run:android --device 'Pixel_3a_API_30_x86'",
     "web": "expo start --web",
-    "test": "jest"
+    "test": "jest",
+    "build": "expo build"
   },
   "dependencies": {
     "@emotion/native": "^11.11.0",
