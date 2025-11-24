@@ -15,6 +15,7 @@ jobs:
         run: npm test
         working-directory: carnegie-app
   deploy:
+    needs: test
     runs-on: macos-latest
     steps:
       - name: Get code
