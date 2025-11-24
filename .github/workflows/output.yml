@@ -1,8 +1,14 @@
 name: Output
-on: workflow_dispatch
+on: [workflow_dispatch, issues]
 jobs:
   info:
     runs-on: macos-latest
     steps:
       - name: Output Github context
         run: echo "${{ toJSON(github) }}"
+  issues:
+    needs: info
+    runs-on: macos-latest
+    steps:
+      - name: Output event details
+        run: echo "${{ toJSON(github.event) }}"
